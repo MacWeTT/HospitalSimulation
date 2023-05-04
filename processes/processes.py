@@ -2,36 +2,84 @@
 #All the processes used in the simulation are defined here.
 
 import tkinter as tk
-import simpy
+import simpy, simpy.rt
+import time
 
-#debug
-# from entitles import entitles
-
-def departmentDentist(env, patient, nurse):
-    """
-    The patient is sent to the dentist department.
-    Patient is then examined, and if the patient needs a surgery, he is sent to the surgeon department.
-    Otherwise, he is taken care of by the dentist itself.
-    The patient will be provided the necessary treatment and prescribed the necessary medicines.
-    The patient is then sent to the cashier, where he pays the bill.
-    """
+def departmentDentist(patient, nurse) -> None:
+    #Tkinter GUI
     window = tk.Tk()
-    window.title("The Dentist")
-    window.title_label = tk.Label(window, text="Welcome to the Dentist's department!")
-    window.title_label.grid(row=0, column=0, padx=10, pady=10)
-    print(patient)
-    print(nurse)
-    print("Doctor ka hogaya")
-    yield env.timeout(10)  # Time for examination
+    window.title("Dentist Department")
+    window.geometry("500x500")
+    header = tk.Label(window, text=f"Hello {patient.name}! Welcome to the Dentist Department.")
+    header.grid(row=0, column=1, pady=10,padx=10)
+    simulatorBox = tk.Text(window, height=15, width=50)
+    simulatorBox.grid(row=1, column=1, pady=10)
+    simulationTimeBox= tk.Text(window, height=15, width=3)
+    simulationTimeBox.grid(row=1, column=0, pady=10, padx=10)
+    start_button = tk.Button(window, text="Start", command=lambda: patient_process(patient))
+    start_button.grid(row=3, column=1, pady=10, padx=10)
+    text_1 = tk.Label(window, text="Please wait while the examination is in progress...")
+    text_1.grid(row=4, column=1, pady=10, padx=10)
     
-    window.mainloop()
+    def patient_process(patient):
+        def start_simulation(env,patient):
+            # Start the exam
+            yield env.timeout(1)
+            simulatorBox.insert(tk.END, "Starting exam...\n")
+            simulationTimeBox.insert(tk.END, f"{env.now}\n")
+            window.update()
 
+            # Clean the teeth
+            yield env.timeout(2)
+            simulatorBox.insert(tk.END, "Cleaning teeth...\n")
+            simulationTimeBox.insert(tk.END, f"{env.now}\n")
+            window.update()
 
-def departmentUltrasound(env, nurse, patient):
-    pass
+            # Check for cavities
+            yield env.timeout(3)
+            # if patient.has_cavities:
+            #     simulatorBox.insert(tk.END, "Cavities found. Referring to surgeon...\n")
+            #     patient.department = "surgeon"
+            #     # events.surgeon.put(patient)
+            #     return
+            # else:
+                
+            simulatorBox.insert(tk.END, "No cavities found. Proceeding with treatment...\n")
+            simulationTimeBox.insert(tk.END, f"{env.now}\n")
+            window.update()
 
-# env = simpy.RealtimeEnvironment(factor=1)
-# patient = entitles.Patient(name="Manas", problem="Dental", wait_time=10)
-# dentistNurse = entitles.Nurse(name="Dentist's Nurse", patient=patient)
-# env.process(departmentDentist(env,patient,nurse=dentistNurse))
-# env.run(until=20)
+            # Fillings
+            yield env.timeout(2)
+            simulatorBox.insert(tk.END, "Performing fillings...\n")
+            simulationTimeBox.insert(tk.END, f"{env.now}\n")
+            window.update()
+
+            # Root Canal
+            # if patient.has_root_canal:
+            #     yield env.timeout(3)
+            #     simulatorBox.insert(tk.END, "Performing root canal...\n")
+            # else:
+            simulatorBox.insert(tk.END, "No root canal required...\n")
+            simulationTimeBox.insert(tk.END, f"{env.now}\n")
+            window.update()
+
+            # Prescription
+            yield env.timeout(1)
+            simulatorBox.insert(tk.END, "Prescribing medication...\n")
+            simulationTimeBox.insert(tk.END, f"{env.now}\n")
+            window.update()
+
+            # Payment
+            yield env.timeout(2)
+            simulatorBox.insert(tk.END, f"Payment due: {patient.bill}\n")
+            simulationTimeBox.insert(tk.END, f"{env.now}\n")
+            yield env.timeout(2)
+            text_1.config(text="Thank you for visiting the Dentist Department!")
+            window.update()
+
+        # Start the simulation environment
+        dentistenv = simpy.rt.RealtimeEnvironment(factor=1)
+        # Start the patient process
+        dentist = dentistenv.process(start_simulation(dentistenv, patient))
+        # Run the simulation
+        dentistenv.run(until=dentist)

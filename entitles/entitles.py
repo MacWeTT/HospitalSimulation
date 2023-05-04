@@ -2,10 +2,10 @@ from simpy import Resource
 
 class Patient:
     """Patient's Name, Problem, and Wait Time"""
-    def __init__(self,name, problem, wait_time):
+    def __init__(self,name, problem="None", bill=0, **kwargs):
         self.name = name
         self.problem = problem
-        self.wait_time = wait_time
+        self.bill = bill
         
     def __str__(self):
         return f"Patient(name={self.name}, problem={self.problem}, wait_time={self.wait_time})"
@@ -53,6 +53,9 @@ class Dentist():
         print(f"Dentist is extracting a tooth from {patient}...")
         yield self.env.timeout(60)  # Time for tooth extraction
         print(f"Dentist has finished extracting a tooth from {patient}.")
+        
+    def __str__(self) -> str:
+        print("You requested a dentist.")
         
 class RadiologyTechnician:
     pass
