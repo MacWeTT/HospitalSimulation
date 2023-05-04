@@ -27,7 +27,7 @@ def departmentDentist(env, patient, nurse):
     window.mainloop()
 
 
-def departmentUltrasound():
+def departmentUltrasound(env, nurse, patient):
     pass
 
 # env = simpy.RealtimeEnvironment(factor=1)

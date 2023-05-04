@@ -53,3 +53,6 @@ class Dentist():
         print(f"Dentist is extracting a tooth from {patient}...")
         yield self.env.timeout(60)  # Time for tooth extraction
         print(f"Dentist has finished extracting a tooth from {patient}.")
+        
+class RadiologyTechnician:
+    pass

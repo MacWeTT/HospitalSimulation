@@ -77,7 +77,7 @@ class HospitalSimulator:
                     psychiatristNurse = entitles.Nurse(name="Psychiatrist's Nurse", patient=self.patient)
                     yield self.env.process(processes.departmentPsychiatrist(self.env, self.patient, psychiatristNurse))
                 elif selected_department == "ultrasound":
-                    radiologyTech = entitles.RadiologyTechnician(name="Radiology Technician", patient=self.patient)
+                    radiologyTech = entitles.Nurse(name="Radiology Technician", patient=self.patient)
                     yield self.env.process(processes.departmentUltrasound(self.env, self.patient, radiologyTech))
                 else:
                     print("Invalid department selected")
