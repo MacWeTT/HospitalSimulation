@@ -1,67 +1,154 @@
-#Processes
-#All the processes used in the simulation are defined here.
+# Processes
+# All the processes used in the simulation are defined here.
 
 import tkinter as tk
 import simpy, simpy.rt
-import time
+import entitles.entitles as entitles
+
 
 def departmentDentist(patient, nurse) -> None:
-    #Tkinter GUI
+    # Tkinter GUI
     window = tk.Tk()
     window.title("Dentist Department")
-    window.geometry("500x500")
-    header = tk.Label(window, text=f"Hello {patient.name}! Welcome to the Dentist Department.")
-    header.grid(row=0, column=1, pady=10,padx=10)
-    simulatorBox = tk.Text(window, height=15, width=50)
+    window.geometry("800x500")
+
+    header = tk.Label(
+        window, text=f"Hello {patient.name}! Welcome to the Dentist Department."
+    )
+    header.grid(row=0, column=1, pady=10, padx=10)
+
+    simulatorBox = tk.Text(window, height=20, width=90)
     simulatorBox.grid(row=1, column=1, pady=10)
-    simulationTimeBox= tk.Text(window, height=15, width=3)
+    simulationTimeBox = tk.Text(window, height=20, width=3)
     simulationTimeBox.grid(row=1, column=0, pady=10, padx=10)
-    start_button = tk.Button(window, text="Start", command=lambda: patient_process(patient))
+
+    start_button = tk.Button(
+        window, text="Examine", command=lambda: patient_process(patient)
+    )
     start_button.grid(row=3, column=1, pady=10, padx=10)
-    text_1 = tk.Label(window, text="Please wait while the examination is in progress...")
+
+    text_1 = tk.Label(window, text="Press Examine to start the procedure...")
     text_1.grid(row=4, column=1, pady=10, padx=10)
-    
+
     def patient_process(patient):
-        def start_simulation(env,patient):
-            # Start the exam
+        def start_simulation(env, patient: entitles.Patient):
+            text_1.config(text="Please wait while the examination is in progress...")
+            start_button.config(state=tk.DISABLED)
+            # Start the examination
+            simulatorBox.insert(tk.END, f"Starting {patient.name}'s examination.\n")
+            simulationTimeBox.insert(tk.END, f"{env.now}\n")
             yield env.timeout(1)
-            simulatorBox.insert(tk.END, "Starting exam...\n")
-            simulationTimeBox.insert(tk.END, f"{env.now}\n")
             window.update()
 
-            # Clean the teeth
+            # Report the issues
+            problems = patient.problems["dental"]
+            simulatorBox.insert(
+                tk.END, f"Dentist found the following issues: {problems}\n"
+            )
+            simulationTimeBox.insert(tk.END, f"{env.now}\n")
             yield env.timeout(2)
-            simulatorBox.insert(tk.END, "Cleaning teeth...\n")
+            window.update()
+
+            simulatorBox.insert(tk.END, "Starting the treatment\n")
             simulationTimeBox.insert(tk.END, f"{env.now}\n")
             window.update()
 
-            # Check for cavities
-            yield env.timeout(3)
-            # if patient.has_cavities:
-            #     simulatorBox.insert(tk.END, "Cavities found. Referring to surgeon...\n")
-            #     patient.department = "surgeon"
-            #     # events.surgeon.put(patient)
-            #     return
-            # else:
-                
-            simulatorBox.insert(tk.END, "No cavities found. Proceeding with treatment...\n")
-            simulationTimeBox.insert(tk.END, f"{env.now}\n")
-            window.update()
+            # If cavities exist, perform fillings and root canal
+            if problems.count("caries"):
+                simulatorBox.insert(tk.END, "Treating dental caries...\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                yield env.timeout(0)
+                window.update()
 
-            # Fillings
-            yield env.timeout(2)
-            simulatorBox.insert(tk.END, "Performing fillings...\n")
-            simulationTimeBox.insert(tk.END, f"{env.now}\n")
-            window.update()
+                simulatorBox.insert(tk.END, "~Injecting anaesthesia\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                yield env.timeout(1)
+                window.update()
 
-            # Root Canal
-            # if patient.has_root_canal:
-            #     yield env.timeout(3)
-            #     simulatorBox.insert(tk.END, "Performing root canal...\n")
-            # else:
-            simulatorBox.insert(tk.END, "No root canal required...\n")
-            simulationTimeBox.insert(tk.END, f"{env.now}\n")
-            window.update()
+                simulatorBox.insert(tk.END, "~Performing root canal\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                yield env.timeout(2)
+                window.update()
+
+                simulatorBox.insert(tk.END, "~Filling the tooth\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                yield env.timeout(2)
+                window.update()
+
+                simulatorBox.insert(tk.END, "~Polishing the tooth\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                yield env.timeout(1)
+                window.update()
+
+                simulatorBox.insert(tk.END, "Treatment for dental caries successful.\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+
+                # Add prescriptions and bill
+                patient.prescriptions["dental"].append("Ketrol DT")
+                patient.prescriptions["dental"].append("IBUPROFEN")
+                patient.bill["dental"]["RCT + filling charges"] += 2500
+                patient.bill["dental"]["Medication charges"] += 220
+                patient.bill_total += 2720
+
+            # If tooth is broken, perform extraction
+            if problems.count("brokentooth"):
+                simulatorBox.insert(tk.END, "Treating broken tooth...\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                yield env.timeout(0)
+                window.update()
+
+                simulatorBox.insert(tk.END, "~Injecting anaesthesia\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                yield env.timeout(1)
+                window.update()
+
+                simulatorBox.insert(tk.END, "~Extracting the tooth\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                yield env.timeout(2)
+                window.update()
+
+                simulatorBox.insert(tk.END, "Treatment for broken tooth successful.\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+
+                # Add prescriptions and bill
+                patient.prescriptions["dental"].append("Ketrol DT")
+                patient.prescriptions["dental"].append("Acetaminophen")
+                patient.bill["dental"]["Extraction charges"] += 1000
+                patient.bill["dental"]["Medication charges"] += 1070
+                patient.bill_total += 2070
+
+            # If gums are bleeding, perform cleaning and apply medication
+            if problems.count("bleedinggums"):
+                simulatorBox.insert(tk.END, "Treating bleeding gums...\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                yield env.timeout(0)
+                window.update()
+
+                simulatorBox.insert(tk.END, "~Injecting anaesthesia\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                yield env.timeout(1)
+                window.update()
+
+                simulatorBox.insert(tk.END, "~Cleaning the gums\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                yield env.timeout(2)
+                window.update()
+
+                simulatorBox.insert(tk.END, "~Applying medication\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                yield env.timeout(1)
+                window.update()
+
+                simulatorBox.insert(tk.END, "Treatment for bleeding gums successful.\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+
+                patient.prescriptions["dental"].append("Amoxycillin")
+                patient.bill["dental"]["Gum treatment charges"] += 1000
+                patient.bill["dental"]["Medication charges"] += 30
+                patient.bill_total += 1030
 
             # Prescription
             yield env.timeout(1)
@@ -69,16 +156,25 @@ def departmentDentist(patient, nurse) -> None:
             simulationTimeBox.insert(tk.END, f"{env.now}\n")
             window.update()
 
+            patient.bill["dental"]["Examination charges"] += 500
+            patient.bill_total += 500
+
             # Payment
             yield env.timeout(2)
-            simulatorBox.insert(tk.END, f"Payment due: {patient.bill}\n")
+            simulatorBox.insert(tk.END, f"Payment due: {patient.bill_total}\n")
             simulationTimeBox.insert(tk.END, f"{env.now}\n")
             yield env.timeout(2)
+            start_button.config(
+                state=tk.NORMAL, text="Pay Bill", command=payment_window
+            )
             text_1.config(text="Thank you for visiting the Dentist Department!")
             window.update()
 
+        def payment_window():
+            print("Payment window")
+
         # Start the simulation environment
-        dentistenv = simpy.rt.RealtimeEnvironment(factor=1)
+        dentistenv = simpy.rt.RealtimeEnvironment(factor=1, initial_time=0)
         # Start the patient process
         dentist = dentistenv.process(start_simulation(dentistenv, patient))
         # Run the simulation
