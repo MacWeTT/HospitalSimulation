@@ -6,7 +6,7 @@ import simpy, simpy.rt
 import entitles.entitles as entitles
 
 
-def departmentDentist(patient, nurse) -> None:
+def departmentDentist(patient: entitles.Patient, nurse: entitles.Nurse) -> None:
     # Tkinter GUI
     window = tk.Tk()
     window.title("Dentist Department")
@@ -31,14 +31,17 @@ def departmentDentist(patient, nurse) -> None:
     text_1.grid(row=4, column=1, pady=10, padx=10)
 
     def patient_process(patient) -> None:
-        def start_simulation(env, patient: entitles.Patient) -> None:
+        def start_simulation(
+            env: simpy.rt.RealtimeEnvironment, patient: entitles.Patient
+        ) -> None:
             text_1.config(text="Please wait while the examination is in progress...")
             start_button.config(state=tk.DISABLED)
+
             # Start the examination
             simulatorBox.insert(tk.END, f"Starting {patient.name}'s examination.\n")
             simulationTimeBox.insert(tk.END, f"{env.now}\n")
-            yield env.timeout(1)
             window.update()
+            yield env.timeout(2)
 
             # Report the issues
             problems = patient.problems["dental"]
@@ -46,39 +49,38 @@ def departmentDentist(patient, nurse) -> None:
                 tk.END, f"Dentist found the following issues: {problems}\n"
             )
             simulationTimeBox.insert(tk.END, f"{env.now}\n")
-            yield env.timeout(2)
             window.update()
 
             simulatorBox.insert(tk.END, "Starting the treatment\n")
             simulationTimeBox.insert(tk.END, f"{env.now}\n")
             window.update()
+            yield env.timeout(1)
 
             # If cavities exist, perform fillings and root canal
             if problems.count("caries"):
                 simulatorBox.insert(tk.END, "Treating dental caries...\n")
                 simulationTimeBox.insert(tk.END, f"{env.now}\n")
-                yield env.timeout(0)
                 window.update()
 
                 simulatorBox.insert(tk.END, "~Injecting anaesthesia\n")
                 simulationTimeBox.insert(tk.END, f"{env.now}\n")
-                yield env.timeout(1)
                 window.update()
+                yield env.timeout(1)
 
                 simulatorBox.insert(tk.END, "~Performing root canal\n")
                 simulationTimeBox.insert(tk.END, f"{env.now}\n")
-                yield env.timeout(2)
                 window.update()
+                yield env.timeout(2)
 
                 simulatorBox.insert(tk.END, "~Filling the tooth\n")
                 simulationTimeBox.insert(tk.END, f"{env.now}\n")
-                yield env.timeout(2)
                 window.update()
+                yield env.timeout(2)
 
                 simulatorBox.insert(tk.END, "~Polishing the tooth\n")
                 simulationTimeBox.insert(tk.END, f"{env.now}\n")
-                yield env.timeout(1)
                 window.update()
+                yield env.timeout(1)
 
                 simulatorBox.insert(tk.END, "Treatment for dental caries successful.\n")
                 simulationTimeBox.insert(tk.END, f"{env.now}\n")
@@ -95,18 +97,17 @@ def departmentDentist(patient, nurse) -> None:
             if problems.count("brokentooth"):
                 simulatorBox.insert(tk.END, "Treating broken tooth...\n")
                 simulationTimeBox.insert(tk.END, f"{env.now}\n")
-                yield env.timeout(0)
                 window.update()
 
                 simulatorBox.insert(tk.END, "~Injecting anaesthesia\n")
                 simulationTimeBox.insert(tk.END, f"{env.now}\n")
-                yield env.timeout(1)
                 window.update()
+                yield env.timeout(1)
 
                 simulatorBox.insert(tk.END, "~Extracting the tooth\n")
                 simulationTimeBox.insert(tk.END, f"{env.now}\n")
-                yield env.timeout(2)
                 window.update()
+                yield env.timeout(2)
 
                 simulatorBox.insert(tk.END, "Treatment for broken tooth successful.\n")
                 simulationTimeBox.insert(tk.END, f"{env.now}\n")
@@ -123,23 +124,22 @@ def departmentDentist(patient, nurse) -> None:
             if problems.count("bleedinggums"):
                 simulatorBox.insert(tk.END, "Treating bleeding gums...\n")
                 simulationTimeBox.insert(tk.END, f"{env.now}\n")
-                yield env.timeout(0)
                 window.update()
 
                 simulatorBox.insert(tk.END, "~Injecting anaesthesia\n")
                 simulationTimeBox.insert(tk.END, f"{env.now}\n")
-                yield env.timeout(1)
                 window.update()
+                yield env.timeout(1)
 
                 simulatorBox.insert(tk.END, "~Cleaning the gums\n")
                 simulationTimeBox.insert(tk.END, f"{env.now}\n")
-                yield env.timeout(2)
                 window.update()
+                yield env.timeout(2)
 
                 simulatorBox.insert(tk.END, "~Applying medication\n")
                 simulationTimeBox.insert(tk.END, f"{env.now}\n")
-                yield env.timeout(1)
                 window.update()
+                yield env.timeout(1)
 
                 simulatorBox.insert(tk.END, "Treatment for bleeding gums successful.\n")
                 simulationTimeBox.insert(tk.END, f"{env.now}\n")
@@ -151,8 +151,13 @@ def departmentDentist(patient, nurse) -> None:
                 patient.bill_total += 1030
 
             # Prescription
-            yield env.timeout(1)
             simulatorBox.insert(tk.END, "Prescribing medication...\n")
+            simulationTimeBox.insert(tk.END, f"{env.now}\n")
+            window.update()
+            yield env.timeout(1)
+            simulatorBox.insert(
+                tk.END, f"Prescribed: {patient.prescriptions['dental']}\n"
+            )
             simulationTimeBox.insert(tk.END, f"{env.now}\n")
             simulatorBox.see(tk.END)
             simulationTimeBox.see(tk.END)
@@ -162,12 +167,10 @@ def departmentDentist(patient, nurse) -> None:
             patient.bill_total += 500
 
             # Payment
-            yield env.timeout(2)
             simulatorBox.insert(tk.END, f"Payment due: {patient.bill_total}\n")
             simulationTimeBox.insert(tk.END, f"{env.now}\n")
             simulatorBox.see(tk.END)
             simulationTimeBox.see(tk.END)
-            yield env.timeout(2)
             start_button.config(
                 state=tk.NORMAL,
                 text="Pay Bill",
@@ -183,11 +186,11 @@ def departmentDentist(patient, nurse) -> None:
             text_main = tk.Label(window_pay, text="Dentist Bill Summary")
             text_main.grid(row=0, column=0, columnspan=3, padx=10, pady=10)
 
-            bill_box = tk.Text(window_pay, height=10, width=30, padx=10, pady=10)
-            bill_box.grid(row=1, column=0, columnspan=2)
+            bill_box = tk.Text(window_pay, height=10, width=30)
+            bill_box.grid(row=1, column=0, columnspan=2, padx=10, pady=10)
 
-            amount_box = tk.Text(window_pay, height=10, width=5, padx=10, pady=10)
-            amount_box.grid(row=1, column=2)
+            amount_box = tk.Text(window_pay, height=10, width=5)
+            amount_box.grid(row=1, column=2, padx=10, pady=10)
 
             for key, value in patient.bill["dental"].items():
                 bill_box.insert(tk.END, f"{key}\n")
@@ -202,6 +205,7 @@ def departmentDentist(patient, nurse) -> None:
                 simulatorBox.insert(
                     tk.END, "Thank you for visiting the Dentist Department!\n"
                 )
+                start_button.config(tk.DISABLED)
                 simulationTimeBox.insert(tk.END, f"{dentistenv.now}\n")
                 window.update()
 
