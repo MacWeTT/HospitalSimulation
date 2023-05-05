@@ -30,8 +30,8 @@ def departmentDentist(patient, nurse) -> None:
     text_1 = tk.Label(window, text="Press Examine to start the procedure...")
     text_1.grid(row=4, column=1, pady=10, padx=10)
 
-    def patient_process(patient):
-        def start_simulation(env, patient: entitles.Patient):
+    def patient_process(patient) -> None:
+        def start_simulation(env, patient: entitles.Patient) -> None:
             text_1.config(text="Please wait while the examination is in progress...")
             start_button.config(state=tk.DISABLED)
             # Start the examination
@@ -154,6 +154,8 @@ def departmentDentist(patient, nurse) -> None:
             yield env.timeout(1)
             simulatorBox.insert(tk.END, "Prescribing medication...\n")
             simulationTimeBox.insert(tk.END, f"{env.now}\n")
+            simulatorBox.see(tk.END)
+            simulationTimeBox.see(tk.END)
             window.update()
 
             patient.bill["dental"]["Examination charges"] += 500
@@ -163,15 +165,52 @@ def departmentDentist(patient, nurse) -> None:
             yield env.timeout(2)
             simulatorBox.insert(tk.END, f"Payment due: {patient.bill_total}\n")
             simulationTimeBox.insert(tk.END, f"{env.now}\n")
+            simulatorBox.see(tk.END)
+            simulationTimeBox.see(tk.END)
             yield env.timeout(2)
             start_button.config(
-                state=tk.NORMAL, text="Pay Bill", command=payment_window
+                state=tk.NORMAL,
+                text="Pay Bill",
+                command=payment_window,
             )
             text_1.config(text="Thank you for visiting the Dentist Department!")
             window.update()
 
-        def payment_window():
-            print("Payment window")
+        def payment_window() -> None:
+            window_pay = tk.Toplevel(window)
+            window_pay.title("Pay Bill")
+
+            text_main = tk.Label(window_pay, text="Dentist Bill Summary")
+            text_main.grid(row=0, column=0, columnspan=3, padx=10, pady=10)
+
+            bill_box = tk.Text(window_pay, height=10, width=30, padx=10, pady=10)
+            bill_box.grid(row=1, column=0, columnspan=2)
+
+            amount_box = tk.Text(window_pay, height=10, width=5, padx=10, pady=10)
+            amount_box.grid(row=1, column=2)
+
+            for key, value in patient.bill["dental"].items():
+                bill_box.insert(tk.END, f"{key}\n")
+                amount_box.insert(tk.END, f"{value}\n")
+                window_pay.update()
+
+            def pay() -> None:
+                simulatorBox.insert(tk.END, "Payment successful.\n")
+                simulationTimeBox.insert(tk.END, f"{dentistenv.now}\n")
+                window.update()
+
+                simulatorBox.insert(
+                    tk.END, "Thank you for visiting the Dentist Department!\n"
+                )
+                simulationTimeBox.insert(tk.END, f"{dentistenv.now}\n")
+                window.update()
+
+                window_pay.destroy()
+
+            pay_button = tk.Button(window_pay, text="Pay Bill", command=pay)
+            pay_button.grid(row=2, column=0, columnspan=3, padx=10, pady=10)
+
+            window_pay.mainloop()
 
         # Start the simulation environment
         dentistenv = simpy.rt.RealtimeEnvironment(factor=1, initial_time=0)

@@ -1,4 +1,3 @@
-import simpy
 import tkinter as tk
 import entitles.entitles as entitles
 import processes.processes as processes
@@ -89,7 +88,7 @@ if __name__ == "__main__":
     # Initialize the objects
     patient = entitles.Patient(
         name="Manas",
-        problems={"dental": ["caries", "bleedinggums", "broken tooth"]},
+        problems={"dental": ["caries", "bleedinggums", "brokentooth"]},
     )
     simulator = HospitalSimulator(patient=patient)
 
