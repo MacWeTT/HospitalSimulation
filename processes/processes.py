@@ -23,11 +23,11 @@ def departmentDentist(patient: entitles.Patient, nurse: entitles.Nurse) -> None:
     simulationTimeBox.grid(row=1, column=0, pady=10, padx=10)
 
     start_button = tk.Button(
-        window, text="Examine", command=lambda: patient_process(patient)
+        window, text="Examine", command=lambda: patient_process(patient), bg="Dodgerblue" ,fg="white",font=("Verdana bold", 10)
     )
     start_button.grid(row=3, column=1, pady=10, padx=10)
 
-    text_1 = tk.Label(window, text="Press Examine to start the procedure...")
+    text_1 = tk.Label(window, text="Press Examine to start the procedure...",font=("Verdana bold", 10))
     text_1.grid(row=4, column=1, pady=10, padx=10)
 
     def patient_process(patient) -> None:
