@@ -77,6 +77,11 @@ class HospitalSimulator:
                     name="Radiology Technician", patient=self.patient
                 )
                 processes.departmentUltrasound(self.patient, radiologyTech)
+            elif selected_department == "physician":
+                Nurse = entitles.Nurse(
+                    name="Nurse", patient=self.patient
+                )
+                processes.departmentPhysician(self.patient, Nurse)
             else:
                 print("Invalid department selected")
         else:
