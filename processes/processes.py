@@ -222,3 +222,35 @@ def departmentDentist(patient: entitles.Patient, nurse: entitles.Nurse) -> None:
         dentist = dentistenv.process(start_simulation(dentistenv, patient))
         # Run the simulation
         dentistenv.run(until=dentist)
+def departmentPhysician(patient: entitles.Patient, nurse: entitles.Nurse) -> None:
+    window = tk.Tk()
+    window.title("Physician")
+    window.title_label = tk.Label(window, text="Welcome to the Physician department!")
+    window.title_label.grid(row=0, column=0, padx=10, pady=10)
+    print(patient)
+    print(nurse)
+    print("physician ka hogaya")
+      # Time for examination
+    window.mainloop()
+
+def departmentOphthalmologist(patient: entitles.Patient, nurse: entitles.Nurse) -> None:
+    window = tk.Tk()
+    window.title("ophthalmologist")
+    window.title_label = tk.Label(window, text="Welcome to the ophthalmologist!")
+    window.title_label.grid(row=0, column=0, padx=10, pady=10)
+    print(patient)
+    print(nurse)
+    print("ophthalmologist ka hogaya")
+      # Time for examination
+    window.mainloop()
+
+def departmentUltrasound(patient: entitles.Patient, nurse: entitles.Nurse) -> None:
+    window = tk.Tk()
+    window.title("Ultrasound")
+    window.title_label = tk.Label(window, text="Welcome to the Ultrasound department!")
+    window.title_label.grid(row=0, column=0, padx=10, pady=10)
+    print(patient)
+    print(nurse)
+    print("ultrasound ka hogaya")
+      # Time for examination
+    window.mainloop()
