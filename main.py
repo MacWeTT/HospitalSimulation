@@ -29,7 +29,7 @@ class HospitalSimulator:
         self.question_label.grid(row=1, column=1, pady=10, columnspan=2)
 
         # Now, we have 4 options to choose from, regarding the patient's problem.
-        self.image = Image.open(r"D:\Websites\HospitalSimulation\assets\dentistImage.png")
+        self.image = Image.open(r"C:\Users\singh\Documents\GitHub\HospitalSimulation2\assets\dentistImage.png")
         self.image = self.image.resize((300, 200)) 
         self.dentist_image = ImageTk.PhotoImage(self.image)
         self.Labelimg = tk.Label(self.root, image=self.dentist_image).grid(row=2, column=0, pady=10, padx=10)
@@ -41,18 +41,18 @@ class HospitalSimulator:
         )
         self.department1_button.grid(row=3, column=0, pady=10, padx=10)
 
-        self.image2 = Image.open(r"D:\Websites\HospitalSimulation\assets\Ophthalmologists.png")
+        self.image2 = Image.open(r"C:\Users\singh\Documents\GitHub\HospitalSimulation2\assets\Ophthalmologists.png")
         self.image2 = self.image2.resize((300, 200)) 
         self.ophthalmologist_image = ImageTk.PhotoImage(self.image2)
         self.Labelimg = tk.Label(self.root, image=self.ophthalmologist_image).grid(row=2, column=1, pady=10, padx=10)
         self.department2 = tk.Label(self.root, text="ophthalmologist")
         self.department2.grid(row=3, column=1, pady=10, padx=10)
         self.department2_button = tk.Button(
-            self.root, text="Go to ophthalmologist", command=lambda: self.run("ophthalmologist "), bg="Dodgerblue" ,fg="white",font=("Verdana bold", 10)
+            self.root, text="Go to ophthalmologist", command=lambda: self.run("ophthalmologist"), bg="Dodgerblue" ,fg="white",font=("Verdana bold", 10)
         )
         self.department2_button.grid(row=3, column=1, pady=10, padx=10)
 
-        self.image3 = Image.open(r"D:\Websites\HospitalSimulation\assets\physician.png")
+        self.image3 = Image.open(r"C:\Users\singh\Documents\GitHub\HospitalSimulation2\assets\physician.png")
         self.image3 = self.image3.resize((300, 200))
         self.physician_image = ImageTk.PhotoImage(self.image3)
         self.Labelimg = tk.Label(self.root, image=self.physician_image).grid(row=2, column=2, pady=10, padx=10)
@@ -63,7 +63,7 @@ class HospitalSimulator:
         )
         self.department3_button.grid(row=3, column=2, pady=10, padx=10)
 
-        self.image4 = Image.open(r"D:\Websites\HospitalSimulation\assets\ultrasound.png")
+        self.image4 = Image.open(r"C:\Users\singh\Documents\GitHub\HospitalSimulation2\assets\ultrasound.png")
         self.image4 = self.image4.resize((300, 200))
         self.ultrasound_image = ImageTk.PhotoImage(self.image4)
         self.Labelimg = tk.Label(self.root, image=self.ultrasound_image).grid(row=2, column=3, pady=10, padx=10)
@@ -87,14 +87,18 @@ class HospitalSimulator:
                     name="Dentist's Nurse", patient=self.patient
                 )
                 processes.departmentDentist(patient=self.patient, nurse=dentistNurse)
-            elif selected_department == "emergency":
-                surgeonNurse = entitles.Nurse(name="ICU's Nurse", patient=self.patient)
-                processes.departmentSurgeon(self.patient, surgeonNurse)
+            elif selected_department == "ophthalmologist":
+                ophthalmologistNurse = entitles.Nurse(name="Ophthalmologist's Nurse", patient=self.patient)
+                processes.departmentOphthalmologist(patient=self.patient, nurse=ophthalmologistNurse)
             elif selected_department == "ultrasound":
                 radiologyTech = entitles.Nurse(
                     name="Radiology Technician", patient=self.patient
                 )
-                processes.departmentUltrasound(self.patient, radiologyTech)
+                processes.departmentUltrasound(patient=self.patient, nurse=radiologyTech)
+            elif selected_department == "physician":
+                physicianNurse = entitles.Nurse(name="Physician's Nurse", patient=self.patient
+                )
+                processes.departmentPhysician(patient=self.patient, nurse=physicianNurse)
             else:
                 print("Invalid department selected")
         else:
