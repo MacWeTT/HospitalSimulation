@@ -26,7 +26,7 @@ class Patient:
                 "Medication charges": 0,
                 "physical examination charges": 0,
             },
-            "pharmacy": {
+            "ultrasound": {
                 "Medication charges": 0,
             },
         },

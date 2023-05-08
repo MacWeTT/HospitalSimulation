@@ -30,7 +30,7 @@ def departmentDentist(patient: entitles.Patient, nurse: entitles.Nurse) -> None:
     text_1 = tk.Label(window, text="Press Examine to start the procedure...")
     text_1.grid(row=4, column=1, pady=10, padx=10)
 
-    def patient_process(patient) -> None:
+    def patient_process(patient: entitles.Patient) -> None:
         def start_simulation(
             env: simpy.rt.RealtimeEnvironment, patient: entitles.Patient
         ) -> None:
@@ -223,6 +223,7 @@ def departmentDentist(patient: entitles.Patient, nurse: entitles.Nurse) -> None:
         # Run the simulation
         dentistenv.run(until=dentist)
 
+
 def departmentPhysician(env, nurse, patient):
     window = tk.Tk()
     window.title("Physician")
@@ -234,6 +235,7 @@ def departmentPhysician(env, nurse, patient):
     yield env.timeout(10)  # Time for examination
     window.mainloop()
 
+
 def departmentEmergency(env, nurse, patient):
     window = tk.Tk()
     window.title("Emergency Ward")
@@ -244,6 +246,7 @@ def departmentEmergency(env, nurse, patient):
     print("emergency ka hogaya")
     yield env.timeout(10)  # Time for examination
     window.mainloop()
+
 
 def departmentUltrasound(env, nurse, patient):
     window = tk.Tk()
