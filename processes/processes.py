@@ -23,7 +23,10 @@ def departmentDentist(patient: entitles.Patient) -> None:
     simulationTimeBox.grid(row=1, column=0, pady=10, padx=10)
 
     start_button = tk.Button(
-        window, text="Examine", command=lambda: patient_process(patient)
+        window, text="Examine", command=lambda: patient_process(patient),
+        bg="Dodgerblue",
+            fg="white",
+            font=("Verdana bold", 10),
     )
     start_button.grid(row=3, column=1, pady=10, padx=10)
 
@@ -241,7 +244,10 @@ def departmentPhysician(patient: entitles.Patient) -> None:
     simulationTimeBox.grid(row=1, column=0, pady=10, padx=10)
 
     start_button = tk.Button(
-        window, text="Examine", command=lambda: patient_process(patient)
+        window, text="Examine", command=lambda: patient_process(patient),
+        bg="Dodgerblue",
+            fg="white",
+            font=("Verdana bold", 10),
     )
     start_button.grid(row=3, column=1, pady=10, padx=10)
 
@@ -488,7 +494,10 @@ def departmentOphthalmologist(patient: entitles.Patient) -> None:
     simulationTimeBox.grid(row=1, column=0, pady=10, padx=10)
 
     start_button = tk.Button(
-        window, text="Enter", command=lambda: patient_process(patient)
+        window, text="Enter", command=lambda: patient_process(patient),
+        bg="Dodgerblue",
+            fg="white",
+            font=("Verdana bold", 10),
     )
     start_button.grid(row=3, column=1, pady=10, padx=10)
 
@@ -714,17 +723,21 @@ def departmentUltrasound(patient: entitles.Patient) -> None:
     header = tk.Label(
         window,
         text=f"Hello {patient.name}! Welcome to the Ultrasound Department.",
-        bg="skyblue",
+        
     )
     header.grid(row=0, column=0, pady=10, padx=10, columnspan=6)
 
     text_2 = tk.Label(
-        window, text="Please select the organs you want to examine:", bg="skyblue"
+        window, text="Please select the organs you want to examine:", 
     )
-    text_2.grid(row=1, column=1, pady=10, padx=10, columnspan=5)
+    text_2.grid(row=1, column=0, pady=10, padx=10, columnspan=6)
 
     start_button = tk.Button(
-        window, text="Examine", command=lambda: patient_process(patient)
+        window, text="Examine", command=lambda: patient_process(patient),
+        bg="Dodgerblue",
+            fg="white",
+            font=("Verdana bold", 10),
+        
     )
     start_button.grid(row=5, column=1, pady=10, padx=10, columnspan=5)
 
@@ -735,20 +748,30 @@ def departmentUltrasound(patient: entitles.Patient) -> None:
             organs.append(organ)
             simulatorBox.insert(tk.END, f"Selected: {organ}\n")
 
-    organ_1 = tk.Button(window, text="Heart", command=lambda: select_organs("heart"))
+    organ_1 = tk.Button(window, text="Heart", command=lambda: select_organs("heart"),bg="dark orchid",
+            fg="white",
+            font=("Verdana bold", 10),)
     organ_1.grid(row=2, column=1, pady=10, padx=10)
 
-    organ_2 = tk.Button(window, text="Liver", command=lambda: select_organs("liver"))
+    organ_2 = tk.Button(window, text="Liver", command=lambda: select_organs("liver"),bg="dark orchid",
+            fg="white",
+            font=("Verdana bold", 10),)
     organ_2.grid(row=2, column=2, pady=10, padx=10)
 
-    organ_3 = tk.Button(window, text="Kidney", command=lambda: select_organs("kidney"))
+    organ_3 = tk.Button(window, text="Kidney", command=lambda: select_organs("kidney"),bg="dark orchid",
+            fg="white",
+            font=("Verdana bold", 10),)
     organ_3.grid(row=2, column=3, pady=10, padx=10)
 
-    organ_4 = tk.Button(window, text="Lungs", command=lambda: select_organs("lungs"))
+    organ_4 = tk.Button(window, text="Lungs", command=lambda: select_organs("lungs"),bg="dark orchid",
+            fg="white",
+            font=("Verdana bold", 10),)
     organ_4.grid(row=2, column=4, pady=10, padx=10)
 
     organ_5 = tk.Button(
-        window, text="Stomach", command=lambda: select_organs("stomach")
+        window, text="Stomach", command=lambda: select_organs("stomach"),bg="dark orchid",
+            fg="white",
+            font=("Verdana bold", 10),
     )
     organ_5.grid(row=2, column=5, pady=10, padx=10)
 
@@ -759,7 +782,7 @@ def departmentUltrasound(patient: entitles.Patient) -> None:
     simulationTimeBox.grid(row=3, column=0, pady=10, padx=10, columnspan=1)
 
     text_1 = tk.Label(
-        window, text="Press Examine to start your examination...", bg="skyblue"
+        window, text="Press Examine to start your examination...",
     )
     text_1.grid(row=4, column=1, pady=10, padx=10, columnspan=5)
 
