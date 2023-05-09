@@ -237,15 +237,229 @@ def departmentPhysician(patient: entitles.Patient, nurse: entitles.Nurse) -> Non
 
 
 def departmentOphthalmologist(patient: entitles.Patient, nurse: entitles.Nurse) -> None:
+    # Tkinter GUI
     window = tk.Tk()
-    window.title("ophthalmologist")
-    window.title_label = tk.Label(window, text="Welcome to the ophthalmologist!")
-    window.title_label.grid(row=0, column=0, padx=10, pady=10)
-    print(patient)
-    print(nurse)
-    print("ophthalmologist ka hogaya")
-    # Time for examination
-    window.mainloop()
+    window.title("Ophthalomologist Department")
+    window.geometry("800x500")
+
+    header = tk.Label(
+        window, text=f"Hello {patient.name}! Welcome to the Ophthalmologist Department."
+    )
+    header.grid(row=0, column=1, pady=10, padx=10)
+
+    simulatorBox = tk.Text(window, height=20, width=90)
+    simulatorBox.grid(row=1, column=1, pady=10)
+    simulationTimeBox = tk.Text(window, height=20, width=3)
+    simulationTimeBox.grid(row=1, column=0, pady=10, padx=10)
+
+    start_button = tk.Button(
+        window, text="Enter", command=lambda: patient_process(patient)
+    )
+    start_button.grid(row=3, column=1, pady=10, padx=10)
+
+    text_1 = tk.Label(window, text="Press Enter to start the procedure...")
+    text_1.grid(row=4, column=1, pady=10, padx=10)
+
+    def patient_process(patient) -> None:
+        def start_simulation(
+            env: simpy.rt.RealtimeEnvironment, patient: entitles.Patient
+        ) -> None:
+            text_1.config(text="Please wait while the examination is in progress...")
+            start_button.config(state=tk.DISABLED)
+
+            # Start the examination
+            simulatorBox.insert(tk.END, f"Starting {patient.name}'s examination.\n")
+            simulationTimeBox.insert(tk.END, f"{env.now}\n")
+            window.update()
+            yield env.timeout(2)
+
+            # Report the issues
+            problems = patient.problems["weakeyesight"]
+            simulatorBox.insert(
+                tk.END, f"Ophthalmologist found the following issues: {problems}\n"
+            )
+            simulationTimeBox.insert(tk.END, f"{env.now}\n")
+            window.update()
+
+            simulatorBox.insert(tk.END, "Checking patient’s history.\n")
+            simulationTimeBox.insert(tk.END, f"{env.now}\n")
+            window.update()
+            yield env.timeout(1)
+
+            # If cavities exist, perform fillings and root canal
+            if problems.count("myopia"):
+                simulatorBox.insert(tk.END, "Proceeding with vision test\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+
+                simulatorBox.insert(tk.END, "~Asked to read the eye chart\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+                yield env.timeout(1)
+
+                simulatorBox.insert(tk.END, "~Performing eye exam \n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+                yield env.timeout(2)
+
+                simulatorBox.insert(tk.END, "~Checking health of the eyes\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+                yield env.timeout(2)
+
+                simulatorBox.insert(tk.END, "~Preparing diagnosis and treatment plan\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+                yield env.timeout(1)
+
+                simulatorBox.insert(tk.END, "Treatment for myopia carries successful.\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+
+                # Add prescriptions and bill
+                patient.prescriptions["weakeyesight"].append("Atropine")
+                patient.bill["weakeyesight"]["eye test charges"] += 2100
+                patient.bill["weakeyesight"]["contact lens charges"] += 3220
+                patient.bill_total += 5320
+
+            # If hyperopia, perform following
+            if problems.count("conjunctivitis"):
+                simulatorBox.insert(tk.END, "Proceeding with conjunctivitis\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+
+                simulatorBox.insert(tk.END, "~Rinsing the eyes\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+                yield env.timeout(2)
+
+                simulatorBox.insert(tk.END, "~Preparing treatment\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+                yield env.timeout(1)
+
+                simulatorBox.insert(tk.END, "~Applying ointment\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+                yield env.timeout(1)
+
+                simulatorBox.insert(tk.END, "Treatment for conjunctivitis carries successful.\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+
+                # Add prescriptions and bill
+                patient.prescriptions["weakeyesight"].append("Antivirals")
+                patient.bill["weakeyesight"]["Test charges"] += 1000
+                patient.bill["weakeyesight"]["Medication charges"] += 1070
+                patient.bill_total += 2070
+
+            # If gums are bleeding, perform cleaning and apply medication
+            if problems.count("cataract"):
+                simulatorBox.insert(tk.END, "Proceeding with the eye surgery\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+
+                simulatorBox.insert(tk.END, "~Performing comprehensive eye exam\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+                yield env.timeout(1)
+
+                simulatorBox.insert(tk.END, "~Discussing surgical options\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+                yield env.timeout(2)
+
+                simulatorBox.insert(tk.END, "~Removing the clouded lens.\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+                yield env.timeout(2)
+
+                simulatorBox.insert(tk.END, "~Monitoring the eye condition\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+                yield env.timeout(1)
+
+                simulatorBox.insert(tk.END, "Surgery performed successfully.\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+
+                patient.prescriptions["weakeyesight"].append("Zeaxanthin")
+                patient.bill["weakeyesight"]["Surgery charges"] += 3000
+                patient.bill["weakeyesight"]["Medication charges"] += 300
+                patient.bill_total += 3300
+
+            # Prescription
+            simulatorBox.insert(tk.END, "Prescribing medication...\n")
+            simulationTimeBox.insert(tk.END, f"{env.now}\n")
+            window.update()
+            yield env.timeout(1)
+            simulatorBox.insert(
+                tk.END, f"Prescribed: {patient.prescriptions['weakeyesight']}\n"
+            )
+            simulationTimeBox.insert(tk.END, f"{env.now}\n")
+            simulatorBox.see(tk.END)
+            simulationTimeBox.see(tk.END)
+            window.update()
+
+            patient.bill["weakeyesight"]["Examination charges"] += 500
+            patient.bill_total += 500
+
+            # Payment
+            simulatorBox.insert(tk.END, f"Payment due: {patient.bill_total}\n")
+            simulationTimeBox.insert(tk.END, f"{env.now}\n")
+            simulatorBox.see(tk.END)
+            simulationTimeBox.see(tk.END)
+            start_button.config(
+                state=tk.NORMAL,
+                text="Pay Bill",
+                command=payment_window,
+            )
+            text_1.config(text="Thank you for visiting the Ophthalmologist Department!")
+            window.update()
+
+        def payment_window() -> None:
+            window_pay = tk.Toplevel(window)
+            window_pay.title("Pay Bill")
+
+            text_main = tk.Label(window_pay, text="Ophthalmologist Bill Summary")
+            text_main.grid(row=0, column=0, columnspan=3, padx=10, pady=10)
+
+            bill_box = tk.Text(window_pay, height=10, width=30)
+            bill_box.grid(row=1, column=0, columnspan=2, padx=10, pady=10)
+
+            amount_box = tk.Text(window_pay, height=10, width=5)
+            amount_box.grid(row=1, column=2, padx=10, pady=10)
+
+            for key, value in patient.bill["weakeyesight"].items():
+                bill_box.insert(tk.END, f"{key}\n")
+                amount_box.insert(tk.END, f"{value}\n")
+                window_pay.update()
+
+            def pay() -> None:
+                simulatorBox.insert(tk.END, "Payment successful.\n")
+                simulationTimeBox.insert(tk.END, f"{ophthalmologistenv.now}\n")
+                window.update()
+
+                simulatorBox.insert(
+                    tk.END, "Thank you for visiting the ophthalmologist Department!\n"
+                )
+                start_button.config(tk.DISABLED)
+                simulationTimeBox.insert(tk.END, f"{ophthalmologistenv.now}\n")
+                window.update()
+
+                window_pay.destroy()
+
+            pay_button = tk.Button(window_pay, text="Pay Bill", command=pay)
+            pay_button.grid(row=2, column=0, columnspan=3, padx=10, pady=10)
+
+            window_pay.mainloop()
+
+        # Start the simulation environment
+        ophthalmologistenv = simpy.rt.RealtimeEnvironment(factor=1, initial_time=0)
+        # Start the patient process
+        ophthalmologist = ophthalmologistenv.process(start_simulation(ophthalmologistenv, patient))
+        # Run the simulation
+        ophthalmologistenv.run(until=ophthalmologist)
 
 
 def departmentUltrasound(patient: entitles.Patient, nurse: entitles.Nurse) -> None:
@@ -348,7 +562,7 @@ def departmentUltrasound(patient: entitles.Patient, nurse: entitles.Nurse) -> No
                 text="Pay Bill",
                 command=payment_window,
             )
-            text_1.config(text="Thank you for visiting the Dentist Department!")
+            text_1.config(text="Thank you for visiting Ultrasound Department!")
             window.update()
 
         def payment_window() -> None:
