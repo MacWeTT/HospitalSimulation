@@ -149,7 +149,7 @@ if __name__ == "__main__":
         name="Vikas",
         problems={"dental": ["caries", "bleedinggums", "brokentooth"],
         "weakeyesight": ["myopia", "conjunctivitis", "cataract"],
-        "illness": ["Hepatitis", "asthma","Hypertension"]},
+        "illness": ["hepatitis", "asthma","hypertension"]},
     )
     simulator = HospitalSimulator(patient=patient)
 

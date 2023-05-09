@@ -185,6 +185,7 @@ def departmentDentist(patient: entitles.Patient) -> None:
         def payment_window() -> None:
             window_pay = tk.Toplevel(window)
             window_pay.title("Pay Bill")
+            window_pay.configure(bg="skyblue")
 
             text_main = tk.Label(window_pay, text="Dentist Bill Summary")
             text_main.grid(row=0, column=0, columnspan=3, padx=10, pady=10)
@@ -214,7 +215,9 @@ def departmentDentist(patient: entitles.Patient) -> None:
 
                 window_pay.destroy()
 
-            pay_button = tk.Button(window_pay, text="Pay Bill", command=pay)
+            pay_button = tk.Button(window_pay, text="Pay Bill", command=pay,bg="Dodgerblue",
+            fg="white",
+            font=("Verdana bold", 10))
             pay_button.grid(row=2, column=0, columnspan=3, padx=10, pady=10)
 
             window_pay.mainloop()
@@ -431,6 +434,7 @@ def departmentPhysician(patient: entitles.Patient) -> None:
         def payment_window() -> None:
             window_pay = tk.Toplevel(window)
             window_pay.title("Pay Bill")
+            window_pay.configure(bg="skyblue")
 
             text_main = tk.Label(window_pay, text="Physician Bill Summary")
             text_main.grid(row=0, column=0, columnspan=3, padx=10, pady=10)
@@ -463,7 +467,9 @@ def departmentPhysician(patient: entitles.Patient) -> None:
 
                 window_pay.destroy()
 
-            pay_button = tk.Button(window_pay, text="Pay Bill", command=pay)
+            pay_button = tk.Button(window_pay, text="Pay Bill", command=pay,bg="Dodgerblue",
+            fg="white",
+            font=("Verdana bold", 10))
             pay_button.grid(row=2, column=0, columnspan=3, padx=10, pady=10)
 
             window_pay.mainloop()
@@ -668,6 +674,7 @@ def departmentOphthalmologist(patient: entitles.Patient) -> None:
         def payment_window() -> None:
             window_pay = tk.Toplevel(window)
             window_pay.title("Pay Bill")
+            window_pay.configure(bg="skyblue")
 
             text_main = tk.Label(window_pay, text="Ophthalmologist Bill Summary")
             text_main.grid(row=0, column=0, columnspan=3, padx=10, pady=10)
@@ -700,7 +707,9 @@ def departmentOphthalmologist(patient: entitles.Patient) -> None:
 
                 window_pay.destroy()
 
-            pay_button = tk.Button(window_pay, text="Pay Bill", command=pay)
+            pay_button = tk.Button(window_pay, text="Pay Bill", command=pay,bg="Dodgerblue",
+            fg="white",
+            font=("Verdana bold", 10))
             pay_button.grid(row=2, column=0, columnspan=3, padx=10, pady=10)
 
             window_pay.mainloop()
