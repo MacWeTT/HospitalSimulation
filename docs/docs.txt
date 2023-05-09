@@ -1,4 +1,8 @@
 Dental problems:
-caries
-broken tooth
-bleedinggums
+caries, broken tooth, bleedinggums
+
+Eye problems:
+nearsightedness, farsightedness, cloudyvision
+
+Ultraound organs:
+liver, heart, kidney, lungs, stomach

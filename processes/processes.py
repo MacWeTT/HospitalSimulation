@@ -6,11 +6,11 @@ import simpy, simpy.rt
 import entitles.entitles as entitles
 
 
-def departmentDentist(patient: entitles.Patient, nurse: entitles.Nurse) -> None:
+def departmentDentist(patient: entitles.Patient) -> None:
     # Tkinter GUI
     window = tk.Tk()
     window.title("Dentist Department")
-    window.geometry("800x500")
+    window.configure(bg="skyblue")
 
     header = tk.Label(
         window, text=f"Hello {patient.name}! Welcome to the Dentist Department."
@@ -224,7 +224,7 @@ def departmentDentist(patient: entitles.Patient, nurse: entitles.Nurse) -> None:
         dentistenv.run(until=dentist)
 
 
-def departmentPhysician(patient: entitles.Patient, nurse: entitles.Nurse) -> None:
+def departmentPhysician(patient: entitles.Patient) -> None:
     window = tk.Tk()
     window.title("Physician")
     window.title_label = tk.Label(window, text="Welcome to the Physician department!")
@@ -236,7 +236,7 @@ def departmentPhysician(patient: entitles.Patient, nurse: entitles.Nurse) -> Non
     window.mainloop()
 
 
-def departmentOphthalmologist(patient: entitles.Patient, nurse: entitles.Nurse) -> None:
+def departmentOphthalmologist(patient: entitles.Patient) -> None:
     window = tk.Tk()
     window.title("ophthalmologist")
     window.title_label = tk.Label(window, text="Welcome to the ophthalmologist!")
@@ -248,9 +248,10 @@ def departmentOphthalmologist(patient: entitles.Patient, nurse: entitles.Nurse) 
     window.mainloop()
 
 
-def departmentUltrasound(patient: entitles.Patient, nurse: entitles.Nurse) -> None:
+def departmentUltrasound(patient: entitles.Patient) -> None:
     window = tk.Tk()
     window.title("Ultrasound")
+    window.configure(bg="skyblue")
     header = tk.Label(
         window, text=f"Hello {patient.name}! Welcome to the Ultrasound Department."
     )

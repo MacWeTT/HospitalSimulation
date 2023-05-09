@@ -130,31 +130,13 @@ class HospitalSimulator:
         selected_department = department
         if selected_department != "None":
             if selected_department == "dentist":
-                dentistNurse = entitles.Nurse(
-                    name="Dentist's Nurse", patient=self.patient
-                )
-                processes.departmentDentist(patient=self.patient, nurse=dentistNurse)
+                processes.departmentDentist(patient=self.patient)
             elif selected_department == "ophthalmologist":
-                ophthalmologistNurse = entitles.Nurse(
-                    name="Ophthalmologist's Nurse", patient=self.patient
-                )
-                processes.departmentOphthalmologist(
-                    patient=self.patient, nurse=ophthalmologistNurse
-                )
+                processes.departmentOphthalmologist(patient=self.patient)
             elif selected_department == "ultrasound":
-                radiologyTech = entitles.Nurse(
-                    name="Radiology Technician", patient=self.patient
-                )
-                processes.departmentUltrasound(
-                    patient=self.patient, nurse=radiologyTech
-                )
+                processes.departmentUltrasound(patient=self.patient)
             elif selected_department == "physician":
-                physicianNurse = entitles.Nurse(
-                    name="Physician's Nurse", patient=self.patient
-                )
-                processes.departmentPhysician(
-                    patient=self.patient, nurse=physicianNurse
-                )
+                processes.departmentPhysician(patient=self.patient)
             else:
                 print("Invalid department selected")
         else:

@@ -44,26 +44,6 @@ class Patient:
         return f"Patient(name={self.name}\n problem={self.problems} \n prescriptions={self.prescriptions} \n bill={self.bill})"
 
 
-class Nurse:
-    """A model of a nurse, who generally aids the doctor and performs other tasks which a doctor does not have time for."""
-
-    def __init__(self, name, patient: Patient):
-        self.name = name
-        self.patient = patient if patient else None
-        self.busy = "not busy" if not patient else f"busy with {patient.name}."
-
-    def __str__(self):
-        return f"{self.name} is currently {self.busy}."
-
-    def assign(self, patient):
-        """Assigns a patient to the nurse."""
-        self.busy = f"Busy with {patient.name}."
-
-    def free(self):
-        """Frees the nurse from the patient."""
-        self.busy = "Not busy"
-
-
 class Dentist:
     """
     A simple dentist, who examines the patient and, if necessary, sends them to the surgeon.
