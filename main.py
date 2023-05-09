@@ -4,7 +4,7 @@ from PIL import Image, ImageTk
 import entitles.entitles as entitles
 import processes.processes as processes
 
-# from utils.utils import askPatient
+from utils.utils import askPatient
 
 from dotenv import load_dotenv
 import os
@@ -146,11 +146,12 @@ class HospitalSimulator:
 
 if __name__ == "__main__":
     # Initialize the objects
-    patient = entitles.Patient(
-        name="Manas",
-        # problems={"dental": ["caries", "bleedinggums", "brokentooth"]},
-        problems={"weakeyesight": ["myopia", "conjunctivitis", "cataract"]},
-    )
+    patient = askPatient()
+    # patient = entitles.Patient(
+    #     name="Manas",
+    #     # problems={"dental": ["caries", "bleedinggums", "brokentooth"]},
+    #     problems={"weakeyesight": ["myopia", "conjunctivitis", "cataract"]},
+    # )
     simulator = HospitalSimulator(patient=patient)
 
     # Run the simulation window
