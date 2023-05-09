@@ -6,11 +6,11 @@ import simpy, simpy.rt
 import entitles.entitles as entitles
 
 
-def departmentDentist(patient: entitles.Patient, nurse: entitles.Nurse) -> None:
+def departmentDentist(patient: entitles.Patient) -> None:
     # Tkinter GUI
     window = tk.Tk()
     window.title("Dentist Department")
-    window.geometry("800x500")
+    window.configure(bg="skyblue")
 
     header = tk.Label(
         window, text=f"Hello {patient.name}! Welcome to the Dentist Department."
@@ -224,7 +224,7 @@ def departmentDentist(patient: entitles.Patient, nurse: entitles.Nurse) -> None:
         dentistenv.run(until=dentist)
 
 
-def departmentPhysician(patient: entitles.Patient, nurse: entitles.Nurse) -> None:
+def departmentPhysician(patient: entitles.Patient) -> None:
     window = tk.Tk()
     window.title("Physician Department")
     window.geometry("800x500")
@@ -268,13 +268,13 @@ def departmentPhysician(patient: entitles.Patient, nurse: entitles.Nurse) -> Non
             simulationTimeBox.insert(tk.END, f"{env.now}\n")
             window.update()
 
-            simulatorBox.insert(tk.END, "Checking patient’s history.\n")
+            simulatorBox.insert(tk.END, "Checking patient's history.\n")
             simulationTimeBox.insert(tk.END, f"{env.now}\n")
             window.update()
             yield env.timeout(1)
 
             # If Hepatitis exist, perform ultrasound and liver biopsy
-            if problems.count("Hepatitis"):
+            if problems.count("hepatitis"):
                 simulatorBox.insert(tk.END, "Taking blood samples ...\n")
                 simulationTimeBox.insert(tk.END, f"{env.now}\n")
                 window.update()
@@ -299,24 +299,30 @@ def departmentPhysician(patient: entitles.Patient, nurse: entitles.Nurse) -> Non
                 window.update()
                 yield env.timeout(1)
 
-                simulatorBox.insert(tk.END, "Treatment for hepatitis caries successful.\n")
+                simulatorBox.insert(
+                    tk.END, "Treatment for hepatitis caries successful.\n"
+                )
                 simulationTimeBox.insert(tk.END, f"{env.now}\n")
                 window.update()
 
                 # Add prescriptions and bill
-                patient.prescriptions["illness"].append("tenofovir disoproxil fumarate (TDF)")
+                patient.prescriptions["illness"].append(
+                    "tenofovir disoproxil fumarate (TDF)"
+                )
                 patient.prescriptions["illness"].append("entecavir (ETV)")
-                patient.bill["illness"]["Test Charges"] += 2000
+                patient.bill["illness"]["Test charges"] += 2000
                 patient.bill["illness"]["Medication charges"] += 250
                 patient.bill_total += 2250
 
             # If Hypertension, perform the following
-            if problems.count("Hypertension"):
+            if problems.count("hypertension"):
                 simulatorBox.insert(tk.END, "Checking blood pressure...\n")
                 simulationTimeBox.insert(tk.END, f"{env.now}\n")
                 window.update()
 
-                simulatorBox.insert(tk.END, "~Performing ambulatory blood pressure monitoring\n")
+                simulatorBox.insert(
+                    tk.END, "~Performing ambulatory blood pressure monitoring\n"
+                )
                 simulationTimeBox.insert(tk.END, f"{env.now}\n")
                 window.update()
                 yield env.timeout(1)
@@ -331,7 +337,9 @@ def departmentPhysician(patient: entitles.Patient, nurse: entitles.Nurse) -> Non
                 window.update()
                 yield env.timeout(1)
 
-                simulatorBox.insert(tk.END, "~Checking reports and prescribing medicines\n")
+                simulatorBox.insert(
+                    tk.END, "~Checking reports and prescribing medicines\n"
+                )
                 simulationTimeBox.insert(tk.END, f"{env.now}\n")
                 window.update()
                 yield env.timeout(1)
@@ -341,7 +349,9 @@ def departmentPhysician(patient: entitles.Patient, nurse: entitles.Nurse) -> Non
                 window.update()
 
                 # Add prescriptions and bill
-                patient.prescriptions["illness"].append("hydrochlorothiazide (Microzide)")
+                patient.prescriptions["illness"].append(
+                    "hydrochlorothiazide (Microzide)"
+                )
                 patient.prescriptions["illness"].append(" benazepril (Lotensin)")
                 patient.bill["illness"]["Test charges"] += 1000
                 patient.bill["illness"]["Medication charges"] += 1070
@@ -358,7 +368,9 @@ def departmentPhysician(patient: entitles.Patient, nurse: entitles.Nurse) -> Non
                 window.update()
                 yield env.timeout(1)
 
-                simulatorBox.insert(tk.END, "~Tracking and dealing with low peak flow readings\n")
+                simulatorBox.insert(
+                    tk.END, "~Tracking and dealing with low peak flow readings\n"
+                )
                 simulationTimeBox.insert(tk.END, f"{env.now}\n")
                 window.update()
                 yield env.timeout(2)
@@ -373,8 +385,10 @@ def departmentPhysician(patient: entitles.Patient, nurse: entitles.Nurse) -> Non
                 window.update()
 
                 patient.prescriptions["illness"].append("Fluticasone (Flovent HFA)")
-                patient.prescriptions["illness"].append("Budesonide (Pulmicort Flexhaler)")
-                patient.bill["illness"]["Tests charges"] += 1500
+                patient.prescriptions["illness"].append(
+                    "Budesonide (Pulmicort Flexhaler)"
+                )
+                patient.bill["illness"]["Test charges"] += 1500
                 patient.bill["illness"]["Medication charges"] += 400
                 patient.bill_total += 1900
 
@@ -452,8 +466,7 @@ def departmentPhysician(patient: entitles.Patient, nurse: entitles.Nurse) -> Non
         physicianenv.run(until=physician)
 
 
-
-def departmentOphthalmologist(patient: entitles.Patient, nurse: entitles.Nurse) -> None:
+def departmentOphthalmologist(patient: entitles.Patient) -> None:
     # Tkinter GUI
     window = tk.Tk()
     window.title("Ophthalomologist Department")
@@ -491,14 +504,14 @@ def departmentOphthalmologist(patient: entitles.Patient, nurse: entitles.Nurse) 
             yield env.timeout(2)
 
             # Report the issues
-            problems = patient.problems["weakeyesight"]
+            problems = patient.problems["eyes"]
             simulatorBox.insert(
                 tk.END, f"Ophthalmologist found the following issues: {problems}\n"
             )
             simulationTimeBox.insert(tk.END, f"{env.now}\n")
             window.update()
 
-            simulatorBox.insert(tk.END, "Checking patient’s history.\n")
+            simulatorBox.insert(tk.END, "Checking patient's history.\n")
             simulationTimeBox.insert(tk.END, f"{env.now}\n")
             window.update()
             yield env.timeout(1)
@@ -529,14 +542,16 @@ def departmentOphthalmologist(patient: entitles.Patient, nurse: entitles.Nurse) 
                 window.update()
                 yield env.timeout(1)
 
-                simulatorBox.insert(tk.END, "Treatment for myopia carries successful.\n")
+                simulatorBox.insert(
+                    tk.END, "Treatment for myopia carries successful.\n"
+                )
                 simulationTimeBox.insert(tk.END, f"{env.now}\n")
                 window.update()
 
                 # Add prescriptions and bill
-                patient.prescriptions["weakeyesight"].append("Atropine")
-                patient.bill["weakeyesight"]["eye test charges"] += 2100
-                patient.bill["weakeyesight"]["contact lens charges"] += 3220
+                patient.prescriptions["eyes"].append("Atropine")
+                patient.bill["eyes"]["eye test charges"] += 2100
+                patient.bill["eyes"]["contact lens charges"] += 3220
                 patient.bill_total += 5320
 
             # If hyperopia, perform following
@@ -560,14 +575,16 @@ def departmentOphthalmologist(patient: entitles.Patient, nurse: entitles.Nurse) 
                 window.update()
                 yield env.timeout(1)
 
-                simulatorBox.insert(tk.END, "Treatment for conjunctivitis carries successful.\n")
+                simulatorBox.insert(
+                    tk.END, "Treatment for conjunctivitis carries successful.\n"
+                )
                 simulationTimeBox.insert(tk.END, f"{env.now}\n")
                 window.update()
 
                 # Add prescriptions and bill
-                patient.prescriptions["weakeyesight"].append("Antivirals")
-                patient.bill["weakeyesight"]["Test charges"] += 1000
-                patient.bill["weakeyesight"]["Medication charges"] += 1070
+                patient.prescriptions["eyes"].append("Antivirals")
+                patient.bill["eyes"]["Test charges"] += 1000
+                patient.bill["eyes"]["Medication charges"] += 1070
                 patient.bill_total += 2070
 
             # If gums are bleeding, perform cleaning and apply medication
@@ -600,9 +617,9 @@ def departmentOphthalmologist(patient: entitles.Patient, nurse: entitles.Nurse) 
                 simulationTimeBox.insert(tk.END, f"{env.now}\n")
                 window.update()
 
-                patient.prescriptions["weakeyesight"].append("Zeaxanthin")
-                patient.bill["weakeyesight"]["Surgery charges"] += 3000
-                patient.bill["weakeyesight"]["Medication charges"] += 300
+                patient.prescriptions["eyes"].append("Zeaxanthin")
+                patient.bill["eyes"]["Surgery charges"] += 3000
+                patient.bill["eyes"]["Medication charges"] += 300
                 patient.bill_total += 3300
 
             # Prescription
@@ -611,14 +628,14 @@ def departmentOphthalmologist(patient: entitles.Patient, nurse: entitles.Nurse) 
             window.update()
             yield env.timeout(1)
             simulatorBox.insert(
-                tk.END, f"Prescribed: {patient.prescriptions['weakeyesight']}\n"
+                tk.END, f"Prescribed: {patient.prescriptions['eyes']}\n"
             )
             simulationTimeBox.insert(tk.END, f"{env.now}\n")
             simulatorBox.see(tk.END)
             simulationTimeBox.see(tk.END)
             window.update()
 
-            patient.bill["weakeyesight"]["Examination charges"] += 500
+            patient.bill["eyes"]["Examination charges"] += 500
             patient.bill_total += 500
 
             # Payment
@@ -647,7 +664,7 @@ def departmentOphthalmologist(patient: entitles.Patient, nurse: entitles.Nurse) 
             amount_box = tk.Text(window_pay, height=10, width=5)
             amount_box.grid(row=1, column=2, padx=10, pady=10)
 
-            for key, value in patient.bill["weakeyesight"].items():
+            for key, value in patient.bill["eyes"].items():
                 bill_box.insert(tk.END, f"{key}\n")
                 amount_box.insert(tk.END, f"{value}\n")
                 window_pay.update()
@@ -674,14 +691,17 @@ def departmentOphthalmologist(patient: entitles.Patient, nurse: entitles.Nurse) 
         # Start the simulation environment
         ophthalmologistenv = simpy.rt.RealtimeEnvironment(factor=1, initial_time=0)
         # Start the patient process
-        ophthalmologist = ophthalmologistenv.process(start_simulation(ophthalmologistenv, patient))
+        ophthalmologist = ophthalmologistenv.process(
+            start_simulation(ophthalmologistenv, patient)
+        )
         # Run the simulation
         ophthalmologistenv.run(until=ophthalmologist)
 
 
-def departmentUltrasound(patient: entitles.Patient, nurse: entitles.Nurse) -> None:
+def departmentUltrasound(patient: entitles.Patient) -> None:
     window = tk.Tk()
     window.title("Ultrasound")
+    window.configure(bg="skyblue")
     header = tk.Label(
         window, text=f"Hello {patient.name}! Welcome to the Ultrasound Department."
     )

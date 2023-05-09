@@ -7,8 +7,8 @@ class Patient:
     def __init__(
         self,
         name,
-        problems={"dental": [], "weakeyesight": [], "physical": [], "ultrasound": []},
-        prescriptions={"dental": [], "weakeyesight": [], "physical": [], "ultrasound": []},
+        problems={"dental": [], "eyes": [], "illness": [], "ultrasound": []},
+        prescriptions={"dental": [], "eyes": [], "illness": [], "ultrasound": []},
         bill={
             "dental": {
                 "Medication charges": 0,
@@ -17,7 +17,7 @@ class Patient:
                 "Gum treatment charges": 0,
                 "Extraction charges": 0,
             },
-            "weakeyesight": {
+            "eyes": {
                 "Medication charges": 0,
                 "Test charges": 0,
                 "Surgery charges": 0,
@@ -25,9 +25,10 @@ class Patient:
                 "contact lens charges": 0,
                 "Examination charges": 0,
             },
-            "physical": {
+            "illness": {
+                "Examination charges": 0,
                 "Medication charges": 0,
-                "physical examination charges": 0,
+                "Test charges": 0,
             },
             "ultrasound": {
                 "Examined organs": 0,
@@ -45,26 +46,6 @@ class Patient:
 
     def __str__(self):
         return f"Patient(name={self.name}\n problem={self.problems} \n prescriptions={self.prescriptions} \n bill={self.bill})"
-
-
-class Nurse:
-    """A model of a nurse, who generally aids the doctor and performs other tasks which a doctor does not have time for."""
-
-    def __init__(self, name, patient: Patient):
-        self.name = name
-        self.patient = patient if patient else None
-        self.busy = "not busy" if not patient else f"busy with {patient.name}."
-
-    def __str__(self):
-        return f"{self.name} is currently {self.busy}."
-
-    def assign(self, patient):
-        """Assigns a patient to the nurse."""
-        self.busy = f"Busy with {patient.name}."
-
-    def free(self):
-        """Frees the nurse from the patient."""
-        self.busy = "Not busy"
 
 
 class Dentist:

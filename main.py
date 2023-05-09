@@ -3,9 +3,7 @@ from tkinter import *
 from PIL import Image, ImageTk
 import entitles.entitles as entitles
 import processes.processes as processes
-
-# from utils.utils import askPatient
-
+from utils.utils import askPatient
 from dotenv import load_dotenv
 import os
 
@@ -130,31 +128,13 @@ class HospitalSimulator:
         selected_department = department
         if selected_department != "None":
             if selected_department == "dentist":
-                dentistNurse = entitles.Nurse(
-                    name="Dentist's Nurse", patient=self.patient
-                )
-                processes.departmentDentist(patient=self.patient, nurse=dentistNurse)
+                processes.departmentDentist(patient=self.patient)
             elif selected_department == "ophthalmologist":
-                ophthalmologistNurse = entitles.Nurse(
-                    name="Ophthalmologist's Nurse", patient=self.patient
-                )
-                processes.departmentOphthalmologist(
-                    patient=self.patient, nurse=ophthalmologistNurse
-                )
+                processes.departmentOphthalmologist(patient=self.patient)
             elif selected_department == "ultrasound":
-                radiologyTech = entitles.Nurse(
-                    name="Radiology Technician", patient=self.patient
-                )
-                processes.departmentUltrasound(
-                    patient=self.patient, nurse=radiologyTech
-                )
+                processes.departmentUltrasound(patient=self.patient)
             elif selected_department == "physician":
-                physicianNurse = entitles.Nurse(
-                    name="Physician's Nurse", patient=self.patient
-                )
-                processes.departmentPhysician(
-                    patient=self.patient, nurse=physicianNurse
-                )
+                processes.departmentPhysician(patient=self.patient)
             else:
                 print("Invalid department selected")
         else:
@@ -164,11 +144,12 @@ class HospitalSimulator:
 
 if __name__ == "__main__":
     # Initialize the objects
+    # patient = askPatient()
     patient = entitles.Patient(
         name="Vikas",
-        problems={"dental": ["caries", "bleedinggums", "brokentooth"],
-        "weakeyesight": ["myopia", "conjunctivitis", "cataract"],
-        "illness": ["Hepatitis", "asthma","Hypertension"]},
+        #problems={"dental": ["caries", "bleedinggums", "brokentooth"]},
+        # problems={"weakeyesight": ["myopia", "conjunctivitis", "cataract"]},
+        problems={"illness": ["Hepatitis", "asthma","Hypertension"]},
     )
     simulator = HospitalSimulator(patient=patient)
 
