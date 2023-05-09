@@ -226,14 +226,231 @@ def departmentDentist(patient: entitles.Patient, nurse: entitles.Nurse) -> None:
 
 def departmentPhysician(patient: entitles.Patient, nurse: entitles.Nurse) -> None:
     window = tk.Tk()
-    window.title("Physician")
-    window.title_label = tk.Label(window, text="Welcome to the Physician department!")
-    window.title_label.grid(row=0, column=0, padx=10, pady=10)
-    print(patient)
-    print(nurse)
-    print("physician ka hogaya")
-    # Time for examination
-    window.mainloop()
+    window.title("Physician Department")
+    window.geometry("800x500")
+
+    header = tk.Label(
+        window, text=f"Hello {patient.name}! Welcome to the Physician Department."
+    )
+    header.grid(row=0, column=1, pady=10, padx=10)
+
+    simulatorBox = tk.Text(window, height=20, width=90)
+    simulatorBox.grid(row=1, column=1, pady=10)
+    simulationTimeBox = tk.Text(window, height=20, width=3)
+    simulationTimeBox.grid(row=1, column=0, pady=10, padx=10)
+
+    start_button = tk.Button(
+        window, text="Examine", command=lambda: patient_process(patient)
+    )
+    start_button.grid(row=3, column=1, pady=10, padx=10)
+
+    text_1 = tk.Label(window, text="Press Examine to start the procedure...")
+    text_1.grid(row=4, column=1, pady=10, padx=10)
+
+    def patient_process(patient) -> None:
+        def start_simulation(
+            env: simpy.rt.RealtimeEnvironment, patient: entitles.Patient
+        ) -> None:
+            text_1.config(text="Please wait while the examination is in progress...")
+            start_button.config(state=tk.DISABLED)
+
+            # Start the examination
+            simulatorBox.insert(tk.END, f"Starting {patient.name}'s examination.\n")
+            simulationTimeBox.insert(tk.END, f"{env.now}\n")
+            window.update()
+            yield env.timeout(2)
+
+            # Report the issues
+            problems = patient.problems["illness"]
+            simulatorBox.insert(
+                tk.END, f"Physician found the following issues: {problems}\n"
+            )
+            simulationTimeBox.insert(tk.END, f"{env.now}\n")
+            window.update()
+
+            simulatorBox.insert(tk.END, "Checking patient’s history.\n")
+            simulationTimeBox.insert(tk.END, f"{env.now}\n")
+            window.update()
+            yield env.timeout(1)
+
+            # If Hepatitis exist, perform ultrasound and liver biopsy
+            if problems.count("Hepatitis"):
+                simulatorBox.insert(tk.END, "Taking blood samples ...\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+
+                simulatorBox.insert(tk.END, "~Performing Ultrasound\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+                yield env.timeout(1)
+
+                simulatorBox.insert(tk.END, "~Checking reports for ultrasound\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+                yield env.timeout(2)
+
+                simulatorBox.insert(tk.END, "~Performing Liver biopsy\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+                yield env.timeout(2)
+
+                simulatorBox.insert(tk.END, "~Recommending medicines\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+                yield env.timeout(1)
+
+                simulatorBox.insert(tk.END, "Treatment for hepatitis caries successful.\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+
+                # Add prescriptions and bill
+                patient.prescriptions["illness"].append("tenofovir disoproxil fumarate (TDF)")
+                patient.prescriptions["illness"].append("entecavir (ETV)")
+                patient.bill["illness"]["Test Charges"] += 2000
+                patient.bill["illness"]["Medication charges"] += 250
+                patient.bill_total += 2250
+
+            # If Hypertension, perform the following
+            if problems.count("Hypertension"):
+                simulatorBox.insert(tk.END, "Checking blood pressure...\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+
+                simulatorBox.insert(tk.END, "~Performing ambulatory blood pressure monitoring\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+                yield env.timeout(1)
+
+                simulatorBox.insert(tk.END, "~Performing Blood and urine tests\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+                yield env.timeout(2)
+
+                simulatorBox.insert(tk.END, "~Performing electrocardiogram\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+                yield env.timeout(1)
+
+                simulatorBox.insert(tk.END, "~Checking reports and prescribing medicines\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+                yield env.timeout(1)
+
+                simulatorBox.insert(tk.END, "Checkup for hypertension successful.\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+
+                # Add prescriptions and bill
+                patient.prescriptions["illness"].append("hydrochlorothiazide (Microzide)")
+                patient.prescriptions["illness"].append(" benazepril (Lotensin)")
+                patient.bill["illness"]["Test charges"] += 1000
+                patient.bill["illness"]["Medication charges"] += 1070
+                patient.bill_total += 2070
+
+            # If asthma, perform tests and prescribe medicines
+            if problems.count("asthma"):
+                simulatorBox.insert(tk.END, "Checking asthma...\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+
+                simulatorBox.insert(tk.END, "~Performing Spirometry\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+                yield env.timeout(1)
+
+                simulatorBox.insert(tk.END, "~Tracking and dealing with low peak flow readings\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+                yield env.timeout(2)
+
+                simulatorBox.insert(tk.END, "~Prescribing medication\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+                yield env.timeout(1)
+
+                simulatorBox.insert(tk.END, "Checkup for asthma successful.\n")
+                simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                window.update()
+
+                patient.prescriptions["illness"].append("Fluticasone (Flovent HFA)")
+                patient.prescriptions["illness"].append("Budesonide (Pulmicort Flexhaler)")
+                patient.bill["illness"]["Tests charges"] += 1500
+                patient.bill["illness"]["Medication charges"] += 400
+                patient.bill_total += 1900
+
+            # Prescription
+            simulatorBox.insert(tk.END, "Prescribing medication...\n")
+            simulationTimeBox.insert(tk.END, f"{env.now}\n")
+            window.update()
+            yield env.timeout(1)
+            simulatorBox.insert(
+                tk.END, f"Prescribed: {patient.prescriptions['illness']}\n"
+            )
+            simulationTimeBox.insert(tk.END, f"{env.now}\n")
+            simulatorBox.see(tk.END)
+            simulationTimeBox.see(tk.END)
+            window.update()
+
+            patient.bill["illness"]["Examination charges"] += 500
+            patient.bill_total += 500
+
+            # Payment
+            simulatorBox.insert(tk.END, f"Payment due: {patient.bill_total}\n")
+            simulationTimeBox.insert(tk.END, f"{env.now}\n")
+            simulatorBox.see(tk.END)
+            simulationTimeBox.see(tk.END)
+            start_button.config(
+                state=tk.NORMAL,
+                text="Pay Bill",
+                command=payment_window,
+            )
+            text_1.config(text="Thank you for visiting the Physician Department!")
+            window.update()
+
+        def payment_window() -> None:
+            window_pay = tk.Toplevel(window)
+            window_pay.title("Pay Bill")
+
+            text_main = tk.Label(window_pay, text="Physician Bill Summary")
+            text_main.grid(row=0, column=0, columnspan=3, padx=10, pady=10)
+
+            bill_box = tk.Text(window_pay, height=10, width=30)
+            bill_box.grid(row=1, column=0, columnspan=2, padx=10, pady=10)
+
+            amount_box = tk.Text(window_pay, height=10, width=5)
+            amount_box.grid(row=1, column=2, padx=10, pady=10)
+
+            for key, value in patient.bill["illness"].items():
+                bill_box.insert(tk.END, f"{key}\n")
+                amount_box.insert(tk.END, f"{value}\n")
+                window_pay.update()
+
+            def pay() -> None:
+                simulatorBox.insert(tk.END, "Payment successful.\n")
+                simulationTimeBox.insert(tk.END, f"{physicianenv.now}\n")
+                window.update()
+
+                simulatorBox.insert(
+                    tk.END, "Thank you for visiting the Physician Department!\n"
+                )
+                start_button.config(tk.DISABLED)
+                simulationTimeBox.insert(tk.END, f"{physicianenv.now}\n")
+                window.update()
+
+                window_pay.destroy()
+
+            pay_button = tk.Button(window_pay, text="Pay Bill", command=pay)
+            pay_button.grid(row=2, column=0, columnspan=3, padx=10, pady=10)
+
+            window_pay.mainloop()
+
+        # Start the simulation environment
+        physicianenv = simpy.rt.RealtimeEnvironment(factor=1, initial_time=0)
+        # Start the patient process
+        physician = physicianenv.process(start_simulation(physicianenv, patient))
+        # Run the simulation
+        physicianenv.run(until=physician)
+
 
 
 def departmentOphthalmologist(patient: entitles.Patient, nurse: entitles.Nurse) -> None:
