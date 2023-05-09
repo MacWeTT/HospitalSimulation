@@ -228,6 +228,7 @@ def departmentPhysician(patient: entitles.Patient) -> None:
     window = tk.Tk()
     window.title("Physician Department")
     window.geometry("800x500")
+    window.configure(bg="skyblue")
 
     header = tk.Label(
         window, text=f"Hello {patient.name}! Welcome to the Physician Department."
@@ -444,6 +445,9 @@ def departmentPhysician(patient: entitles.Patient) -> None:
                 simulationTimeBox.insert(tk.END, f"{physicianenv.now}\n")
                 window.update()
 
+                # Clear the bill
+                patient.bill_total = 0
+
                 simulatorBox.insert(
                     tk.END, "Thank you for visiting the Physician Department!\n"
                 )
@@ -471,6 +475,7 @@ def departmentOphthalmologist(patient: entitles.Patient) -> None:
     window = tk.Tk()
     window.title("Ophthalomologist Department")
     window.geometry("800x500")
+    window.configure(bg="skyblue")
 
     header = tk.Label(
         window, text=f"Hello {patient.name}! Welcome to the Ophthalmologist Department."
@@ -674,6 +679,9 @@ def departmentOphthalmologist(patient: entitles.Patient) -> None:
                 simulationTimeBox.insert(tk.END, f"{ophthalmologistenv.now}\n")
                 window.update()
 
+                # Clear the bill
+                patient.bill_total = 0
+
                 simulatorBox.insert(
                     tk.END, "Thank you for visiting the ophthalmologist Department!\n"
                 )
@@ -702,12 +710,17 @@ def departmentUltrasound(patient: entitles.Patient) -> None:
     window = tk.Tk()
     window.title("Ultrasound")
     window.configure(bg="skyblue")
+
     header = tk.Label(
-        window, text=f"Hello {patient.name}! Welcome to the Ultrasound Department."
+        window,
+        text=f"Hello {patient.name}! Welcome to the Ultrasound Department.",
+        bg="skyblue",
     )
     header.grid(row=0, column=0, pady=10, padx=10, columnspan=6)
 
-    text_2 = tk.Label(window, text="Please select the organs you want to examine:")
+    text_2 = tk.Label(
+        window, text="Please select the organs you want to examine:", bg="skyblue"
+    )
     text_2.grid(row=1, column=1, pady=10, padx=10, columnspan=5)
 
     start_button = tk.Button(
@@ -745,7 +758,9 @@ def departmentUltrasound(patient: entitles.Patient) -> None:
     simulationTimeBox = tk.Text(window, height=20, width=5)
     simulationTimeBox.grid(row=3, column=0, pady=10, padx=10, columnspan=1)
 
-    text_1 = tk.Label(window, text="Press Examine to start your examination...")
+    text_1 = tk.Label(
+        window, text="Press Examine to start your examination...", bg="skyblue"
+    )
     text_1.grid(row=4, column=1, pady=10, padx=10, columnspan=5)
 
     def patient_process(patient) -> None:
@@ -824,6 +839,9 @@ def departmentUltrasound(patient: entitles.Patient) -> None:
                 simulatorBox.insert(tk.END, "Payment successful.\n")
                 simulationTimeBox.insert(tk.END, f"{ultrasoundenv.now}\n")
                 window.update()
+
+                # Clear the bill
+                patient.bill_total = 0
 
                 simulatorBox.insert(
                     tk.END, "Thank you for visiting the Ultrasound Department!\n"
