@@ -148,7 +148,7 @@ if __name__ == "__main__":
     # Initialize the objects
     patient = entitles.Patient(
         name="Manas",
-        #problems={"dental": ["caries", "bleedinggums", "brokentooth"]},
+        # problems={"dental": ["caries", "bleedinggums", "brokentooth"]},
         problems={"weakeyesight": ["myopia", "conjunctivitis", "cataract"]},
     )
     simulator = HospitalSimulator(patient=patient)

@@ -234,7 +234,7 @@ def departmentPhysician(patient: entitles.Patient) -> None:
     window.mainloop()
 
 
-def departmentOphthalmologist(patient: entitles.Patient, nurse: entitles.Nurse) -> None:
+def departmentOphthalmologist(patient: entitles.Patient) -> None:
     # Tkinter GUI
     window = tk.Tk()
     window.title("Ophthalomologist Department")
