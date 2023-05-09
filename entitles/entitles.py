@@ -7,8 +7,8 @@ class Patient:
     def __init__(
         self,
         name,
-        problems={"dental": [], "eyes": [], "physical": [], "ultrasound": []},
-        prescriptions={"dental": [], "eyes": [], "physical": [], "ultrasound": []},
+        problems={"dental": [], "eyes": [], "illness": [], "ultrasound": []},
+        prescriptions={"dental": [], "eyes": [], "illness": [], "ultrasound": []},
         bill={
             "dental": {
                 "Medication charges": 0,
@@ -25,9 +25,10 @@ class Patient:
                 "contact lens charges": 0,
                 "Examination charges": 0,
             },
-            "physical": {
+            "illness": {
+                "Examination charges": 0,
                 "Medication charges": 0,
-                "physical examination charges": 0,
+                "Test charges": 0,
             },
             "ultrasound": {
                 "Examined organs": 0,
