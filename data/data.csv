@@ -1,0 +1,94 @@
+
+        # # If cavities exist, perform fillings and root canal
+        # if problems.count("caries"):
+        #     simulatorBox.insert(tk.END, "Treating dental caries...\n")
+        #     simulationTimeBox.insert(tk.END, f"{env.now}\n")
+        #     window.update()
+
+        #     simulatorBox.insert(tk.END, "~Injecting anaesthesia\n")
+        #     simulationTimeBox.insert(tk.END, f"{env.now}\n")
+        #     window.update()
+        #     yield env.timeout(1)
+
+        #     simulatorBox.insert(tk.END, "~Performing root canal\n")
+        #     simulationTimeBox.insert(tk.END, f"{env.now}\n")
+        #     window.update()
+        #     yield env.timeout(2)
+
+        #     simulatorBox.insert(tk.END, "~Filling the tooth\n")
+        #     simulationTimeBox.insert(tk.END, f"{env.now}\n")
+        #     window.update()
+        #     yield env.timeout(2)
+
+        #     simulatorBox.insert(tk.END, "~Polishing the tooth\n")
+        #     simulationTimeBox.insert(tk.END, f"{env.now}\n")
+        #     window.update()
+        #     yield env.timeout(1)
+
+        #     simulatorBox.insert(tk.END, "Treatment for dental caries successful.\n")
+        #     simulationTimeBox.insert(tk.END, f"{env.now}\n")
+        #     window.update()
+
+        #     # Add prescriptions and bill
+        #     patient.prescriptions["dental"].append("Ketrol DT")
+        #     patient.prescriptions["dental"].append("IBUPROFEN")
+        #     patient.bill["dental"]["RCT + filling charges"] += 2500
+        #     patient.bill["dental"]["Medication charges"] += 220
+        #     patient.bill_total += 2720
+
+        # # If tooth is broken, perform extraction
+        # if problems.count("brokentooth"):
+        #     simulatorBox.insert(tk.END, "Treating broken tooth...\n")
+        #     simulationTimeBox.insert(tk.END, f"{env.now}\n")
+        #     window.update()
+
+        #     simulatorBox.insert(tk.END, "~Injecting anaesthesia\n")
+        #     simulationTimeBox.insert(tk.END, f"{env.now}\n")
+        #     window.update()
+        #     yield env.timeout(1)
+
+        #     simulatorBox.insert(tk.END, "~Extracting the tooth\n")
+        #     simulationTimeBox.insert(tk.END, f"{env.now}\n")
+        #     window.update()
+        #     yield env.timeout(2)
+
+        #     simulatorBox.insert(tk.END, "Treatment for broken tooth successful.\n")
+        #     simulationTimeBox.insert(tk.END, f"{env.now}\n")
+        #     window.update()
+
+        #     # Add prescriptions and bill
+        #     patient.prescriptions["dental"].append("Ketrol DT")
+        #     patient.prescriptions["dental"].append("Acetaminophen")
+        #     patient.bill["dental"]["Extraction charges"] += 1000
+        #     patient.bill["dental"]["Medication charges"] += 1070
+        #     patient.bill_total += 2070
+
+        # # If gums are bleeding, perform cleaning and apply medication
+        # if problems.count("bleedinggums"):
+        # simulatorBox.insert(tk.END, "Treating bleeding gums...\n")
+        # simulationTimeBox.insert(tk.END, f"{env.now}\n")
+        # window.update()
+
+        # simulatorBox.insert(tk.END, "~Injecting anaesthesia\n")
+        # simulationTimeBox.insert(tk.END, f"{env.now}\n")
+        # window.update()
+        # yield env.timeout(1)
+
+        # simulatorBox.insert(tk.END, "~Cleaning the gums\n")
+        # simulationTimeBox.insert(tk.END, f"{env.now}\n")
+        # window.update()
+        # yield env.timeout(2)
+
+        # simulatorBox.insert(tk.END, "~Applying medication\n")
+        # simulationTimeBox.insert(tk.END, f"{env.now}\n")
+        # window.update()
+        # yield env.timeout(1)
+
+        # simulatorBox.insert(tk.END, "Treatment for bleeding gums successful.\n")
+        # simulationTimeBox.insert(tk.END, f"{env.now}\n")
+        # window.update()
+
+        # patient.prescriptions["dental"].append("Amoxycillin")
+        # patient.bill["dental"]["Gum treatment charges"] += 1000
+        # patient.bill["dental"]["Medication charges"] += 30
+        # patient.bill_total += 1030

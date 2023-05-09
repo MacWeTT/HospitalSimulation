@@ -222,6 +222,8 @@ def departmentDentist(patient: entitles.Patient, nurse: entitles.Nurse) -> None:
         dentist = dentistenv.process(start_simulation(dentistenv, patient))
         # Run the simulation
         dentistenv.run(until=dentist)
+
+
 def departmentPhysician(patient: entitles.Patient, nurse: entitles.Nurse) -> None:
     window = tk.Tk()
     window.title("Physician")
@@ -230,8 +232,9 @@ def departmentPhysician(patient: entitles.Patient, nurse: entitles.Nurse) -> Non
     print(patient)
     print(nurse)
     print("physician ka hogaya")
-      # Time for examination
+    # Time for examination
     window.mainloop()
+
 
 def departmentOphthalmologist(patient: entitles.Patient, nurse: entitles.Nurse) -> None:
     window = tk.Tk()
@@ -241,16 +244,157 @@ def departmentOphthalmologist(patient: entitles.Patient, nurse: entitles.Nurse) 
     print(patient)
     print(nurse)
     print("ophthalmologist ka hogaya")
-      # Time for examination
+    # Time for examination
     window.mainloop()
+
 
 def departmentUltrasound(patient: entitles.Patient, nurse: entitles.Nurse) -> None:
     window = tk.Tk()
     window.title("Ultrasound")
-    window.title_label = tk.Label(window, text="Welcome to the Ultrasound department!")
-    window.title_label.grid(row=0, column=0, padx=10, pady=10)
-    print(patient)
-    print(nurse)
-    print("ultrasound ka hogaya")
-      # Time for examination
-    window.mainloop()
+    header = tk.Label(
+        window, text=f"Hello {patient.name}! Welcome to the Ultrasound Department."
+    )
+    header.grid(row=0, column=0, pady=10, padx=10, columnspan=6)
+
+    text_2 = tk.Label(window, text="Please select the organs you want to examine:")
+    text_2.grid(row=1, column=1, pady=10, padx=10, columnspan=5)
+
+    start_button = tk.Button(
+        window, text="Examine", command=lambda: patient_process(patient)
+    )
+    start_button.grid(row=5, column=1, pady=10, padx=10, columnspan=5)
+
+    organs = []
+
+    def select_organs(organ) -> None:
+        if organ not in organs:
+            organs.append(organ)
+            simulatorBox.insert(tk.END, f"Selected: {organ}\n")
+
+    organ_1 = tk.Button(window, text="Heart", command=lambda: select_organs("heart"))
+    organ_1.grid(row=2, column=1, pady=10, padx=10)
+
+    organ_2 = tk.Button(window, text="Liver", command=lambda: select_organs("liver"))
+    organ_2.grid(row=2, column=2, pady=10, padx=10)
+
+    organ_3 = tk.Button(window, text="Kidney", command=lambda: select_organs("kidney"))
+    organ_3.grid(row=2, column=3, pady=10, padx=10)
+
+    organ_4 = tk.Button(window, text="Lungs", command=lambda: select_organs("lungs"))
+    organ_4.grid(row=2, column=4, pady=10, padx=10)
+
+    organ_5 = tk.Button(
+        window, text="Stomach", command=lambda: select_organs("stomach")
+    )
+    organ_5.grid(row=2, column=5, pady=10, padx=10)
+
+    simulatorBox = tk.Text(window, height=20, width=80)
+    simulatorBox.grid(row=3, column=1, pady=10, padx=10, columnspan=5)
+
+    simulationTimeBox = tk.Text(window, height=20, width=5)
+    simulationTimeBox.grid(row=3, column=0, pady=10, padx=10, columnspan=1)
+
+    text_1 = tk.Label(window, text="Press Examine to start your examination...")
+    text_1.grid(row=4, column=1, pady=10, padx=10, columnspan=5)
+
+    def patient_process(patient) -> None:
+        def start_simulation(
+            env: simpy.rt.RealtimeEnvironment,
+            patient: entitles.Patient,
+            ultrasoundMachine: simpy.Resource,
+            organs: list,
+        ) -> None:
+            text_1.config(text="Please wait while the examination is in progress...")
+            start_button.config(state=tk.DISABLED)
+
+            # Clear the text box
+            simulatorBox.delete("1.0", tk.END)
+            # Start the examination
+            simulatorBox.insert(tk.END, f"Starting {patient.name}'s examination.\n")
+            simulationTimeBox.insert(tk.END, f"{env.now}\n")
+            window.update()
+            yield env.timeout(2)
+
+            # Report the issues
+            simulatorBox.insert(
+                tk.END, f"Starting ultrasound on the selected organs..\n"
+            )
+            simulationTimeBox.insert(tk.END, f"{env.now}\n")
+            window.update()
+
+            simulatorBox.insert(tk.END, "Starting the treatment\n")
+            simulationTimeBox.insert(tk.END, f"{env.now}\n")
+            window.update()
+            yield env.timeout(1)
+
+            for organ in organs:
+                with ultrasoundMachine.request() as req:
+                    yield req
+                    yield env.timeout(1)
+                    simulatorBox.insert(tk.END, f"Starting ultrasound on {organ}\n")
+                    simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                    window.update()
+                patient.bill["ultrasound"]["Examination charges"] += 800
+                patient.bill["ultrasound"]["Examined organs"] += 1
+                patient.bill_total += 800
+
+            # Payment
+            simulatorBox.insert(tk.END, f"Payment due: {patient.bill_total}\n")
+            simulationTimeBox.insert(tk.END, f"{env.now}\n")
+            simulatorBox.see(tk.END)
+            simulationTimeBox.see(tk.END)
+            start_button.config(
+                state=tk.NORMAL,
+                text="Pay Bill",
+                command=payment_window,
+            )
+            text_1.config(text="Thank you for visiting the Dentist Department!")
+            window.update()
+
+        def payment_window() -> None:
+            window_pay = tk.Toplevel(window)
+            window_pay.title("Pay Bill")
+
+            text_main = tk.Label(window_pay, text="Ultrasound Bill Summary")
+            text_main.grid(row=0, column=0, columnspan=3, padx=10, pady=10)
+
+            bill_box = tk.Text(window_pay, height=10, width=30)
+            bill_box.grid(row=1, column=0, columnspan=2, padx=10, pady=10)
+
+            amount_box = tk.Text(window_pay, height=10, width=5)
+            amount_box.grid(row=1, column=2, padx=10, pady=10)
+
+            for key, value in patient.bill["ultrasound"].items():
+                bill_box.insert(tk.END, f"{key}\n")
+                amount_box.insert(tk.END, f"{value}\n")
+                window_pay.update()
+
+            def pay() -> None:
+                simulatorBox.insert(tk.END, "Payment successful.\n")
+                simulationTimeBox.insert(tk.END, f"{ultrasoundenv.now}\n")
+                window.update()
+
+                simulatorBox.insert(
+                    tk.END, "Thank you for visiting the Ultrasound Department!\n"
+                )
+                start_button.config(tk.DISABLED)
+                simulationTimeBox.insert(tk.END, f"{ultrasoundenv.now}\n")
+                window.update()
+
+                window_pay.destroy()
+
+            pay_button = tk.Button(window_pay, text="Pay Bill", command=pay)
+            pay_button.grid(row=2, column=0, columnspan=3, padx=10, pady=10)
+
+            window_pay.mainloop()
+
+        # Start the simulation environment
+        ultrasoundenv = simpy.rt.RealtimeEnvironment(factor=1, initial_time=0)
+        # Create the ultrasound machine resource
+        ultrasoundMachine = simpy.Resource(ultrasoundenv, capacity=1)
+        # Start the patient process
+        ultrasound = ultrasoundenv.process(
+            start_simulation(ultrasoundenv, patient, ultrasoundMachine, organs)
+        )
+        # Run the simulation
+        ultrasoundenv.run(until=ultrasound)

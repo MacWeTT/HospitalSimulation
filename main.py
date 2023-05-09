@@ -6,6 +6,11 @@ import processes.processes as processes
 
 # from utils.utils import askPatient
 
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
 
 class HospitalSimulator:
     """
@@ -17,65 +22,107 @@ class HospitalSimulator:
 
         # Tkinter GUI
         self.root = tk.Tk()
-        self.root.configure(bg='skyblue')
+        self.root.configure(bg="skyblue")
         self.department = "None"
         self.root.title("Hospital Simulator")
-        self.title_label = tk.Label(self.root, text="Hospital Simulator",font=("Verdana bold", 40),bg='skyblue')
+        self.title_label = tk.Label(
+            self.root,
+            text="Hospital Simulator",
+            font=("Verdana bold", 40),
+            bg="skyblue",
+        )
         self.title_label.grid(row=0, column=1, pady=10, padx=10, columnspan=2)
 
         self.question_label = tk.Label(
-            self.root, text=f"Hi {self.patient.name}! How may I help you?",font=("Verdana", 15),bg='skyblue'
+            self.root,
+            text=f"Hi {self.patient.name}! How may I help you?",
+            font=("Verdana", 15),
+            bg="skyblue",
         )
         self.question_label.grid(row=1, column=1, pady=10, columnspan=2)
 
         # Now, we have 4 options to choose from, regarding the patient's problem.
-        self.image = Image.open(r"C:\Users\singh\Documents\GitHub\HospitalSimulation2\assets\dentistImage.png")
-        self.image = self.image.resize((300, 200)) 
+        self.image = Image.open(os.getenv("ROOT_DIR") + r"\assets\dentistImage.png")
+        self.image = self.image.resize((300, 200))
         self.dentist_image = ImageTk.PhotoImage(self.image)
-        self.Labelimg = tk.Label(self.root, image=self.dentist_image).grid(row=2, column=0, pady=10, padx=10)
+        self.Labelimg = tk.Label(self.root, image=self.dentist_image).grid(
+            row=2, column=0, pady=10, padx=10
+        )
         self.department1 = tk.Label(self.root, text="Dentist")
         self.department1.grid(row=3, column=0, pady=10, padx=10)
         self.department1_button = tk.Button(
-            self.root, text="Go to dentist", command=lambda: self.run("dentist") , bg="Dodgerblue" ,fg="white",font=("Verdana bold", 10)
-            
+            self.root,
+            text="Go to dentist",
+            command=lambda: self.run("dentist"),
+            bg="Dodgerblue",
+            fg="white",
+            font=("Verdana bold", 10),
         )
         self.department1_button.grid(row=3, column=0, pady=10, padx=10)
 
-        self.image2 = Image.open(r"C:\Users\singh\Documents\GitHub\HospitalSimulation2\assets\Ophthalmologists.png")
-        self.image2 = self.image2.resize((300, 200)) 
+        self.image2 = Image.open(
+            os.getenv("ROOT_DIR") + r"\assets\Ophthalmologists.png"
+        )
+        self.image2 = self.image2.resize((300, 200))
         self.ophthalmologist_image = ImageTk.PhotoImage(self.image2)
-        self.Labelimg = tk.Label(self.root, image=self.ophthalmologist_image).grid(row=2, column=1, pady=10, padx=10)
+        self.Labelimg = tk.Label(self.root, image=self.ophthalmologist_image).grid(
+            row=2, column=1, pady=10, padx=10
+        )
         self.department2 = tk.Label(self.root, text="ophthalmologist")
         self.department2.grid(row=3, column=1, pady=10, padx=10)
         self.department2_button = tk.Button(
-            self.root, text="Go to ophthalmologist", command=lambda: self.run("ophthalmologist"), bg="Dodgerblue" ,fg="white",font=("Verdana bold", 10)
+            self.root,
+            text="Go to ophthalmologist",
+            command=lambda: self.run("ophthalmologist"),
+            bg="Dodgerblue",
+            fg="white",
+            font=("Verdana bold", 10),
         )
         self.department2_button.grid(row=3, column=1, pady=10, padx=10)
 
-        self.image3 = Image.open(r"C:\Users\singh\Documents\GitHub\HospitalSimulation2\assets\physician.png")
+        self.image3 = Image.open(os.getenv("ROOT_DIR") + r"\assets\physician.png")
         self.image3 = self.image3.resize((300, 200))
         self.physician_image = ImageTk.PhotoImage(self.image3)
-        self.Labelimg = tk.Label(self.root, image=self.physician_image).grid(row=2, column=2, pady=10, padx=10)
+        self.Labelimg = tk.Label(self.root, image=self.physician_image).grid(
+            row=2, column=2, pady=10, padx=10
+        )
         self.department3 = tk.Label(self.root, text="Physician")
         self.department3.grid(row=3, column=2, pady=10, padx=10)
         self.department3_button = tk.Button(
-            self.root, text="Go to physician", command=lambda: self.run("physician"), bg="Dodgerblue" ,fg="white",font=("Verdana bold", 10)
+            self.root,
+            text="Go to physician",
+            command=lambda: self.run("physician"),
+            bg="Dodgerblue",
+            fg="white",
+            font=("Verdana bold", 10),
         )
         self.department3_button.grid(row=3, column=2, pady=10, padx=10)
 
-        self.image4 = Image.open(r"C:\Users\singh\Documents\GitHub\HospitalSimulation2\assets\ultrasound.png")
+        self.image4 = Image.open(os.getenv("ROOT_DIR") + r"\assets\ultrasound.png")
         self.image4 = self.image4.resize((300, 200))
         self.ultrasound_image = ImageTk.PhotoImage(self.image4)
-        self.Labelimg = tk.Label(self.root, image=self.ultrasound_image).grid(row=2, column=3, pady=10, padx=10)
+        self.Labelimg = tk.Label(self.root, image=self.ultrasound_image).grid(
+            row=2, column=3, pady=10, padx=10
+        )
         self.department4 = tk.Label(self.root, text="Ultrasound")
         self.department4.grid(row=3, column=3, pady=10, padx=10)
         self.department4_button = tk.Button(
-            self.root, text="Go to ultrasound", command=lambda: self.run("ultrasound"), bg="Dodgerblue" ,fg="white",font=("Verdana bold", 10)
+            self.root,
+            text="Go to ultrasound",
+            command=lambda: self.run("ultrasound"),
+            bg="Dodgerblue",
+            fg="white",
+            font=("Verdana bold", 10),
         )
         self.department4_button.grid(row=3, column=3, pady=10, padx=10)
 
         self.exit_button = tk.Button(
-            self.root, text="Exit The Simulation", command=self.root.destroy, bg="red" ,fg="white",font=("Verdana bold", 10)
+            self.root,
+            text="Exit The Simulation",
+            command=self.root.destroy,
+            bg="red",
+            fg="white",
+            font=("Verdana bold", 10),
         )
         self.exit_button.grid(row=4, column=1, pady=10, padx=10, columnspan=2)
 
@@ -88,17 +135,26 @@ class HospitalSimulator:
                 )
                 processes.departmentDentist(patient=self.patient, nurse=dentistNurse)
             elif selected_department == "ophthalmologist":
-                ophthalmologistNurse = entitles.Nurse(name="Ophthalmologist's Nurse", patient=self.patient)
-                processes.departmentOphthalmologist(patient=self.patient, nurse=ophthalmologistNurse)
+                ophthalmologistNurse = entitles.Nurse(
+                    name="Ophthalmologist's Nurse", patient=self.patient
+                )
+                processes.departmentOphthalmologist(
+                    patient=self.patient, nurse=ophthalmologistNurse
+                )
             elif selected_department == "ultrasound":
                 radiologyTech = entitles.Nurse(
                     name="Radiology Technician", patient=self.patient
                 )
-                processes.departmentUltrasound(patient=self.patient, nurse=radiologyTech)
-            elif selected_department == "physician":
-                physicianNurse = entitles.Nurse(name="Physician's Nurse", patient=self.patient
+                processes.departmentUltrasound(
+                    patient=self.patient, nurse=radiologyTech
                 )
-                processes.departmentPhysician(patient=self.patient, nurse=physicianNurse)
+            elif selected_department == "physician":
+                physicianNurse = entitles.Nurse(
+                    name="Physician's Nurse", patient=self.patient
+                )
+                processes.departmentPhysician(
+                    patient=self.patient, nurse=physicianNurse
+                )
             else:
                 print("Invalid department selected")
         else:
