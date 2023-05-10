@@ -524,7 +524,7 @@ def departmentOphthalmologist(patient: entitles.Patient) -> None:
             yield env.timeout(2)
 
             # Report the issues
-            problems = patient.problems["weakeyesight"]
+            problems = patient.problems["eyes"]
             simulatorBox.insert(
                 tk.END, f"Ophthalmologist found the following issues: {problems}\n"
             )
