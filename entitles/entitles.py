@@ -2,7 +2,7 @@ from simpy import Resource
 
 
 class Patient:
-    """Patient's Name, Problem, and Wait Time"""
+    """Patient's Name, Problem, Bill and Prescriptions"""
 
     def __init__(
         self,

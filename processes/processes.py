@@ -25,7 +25,12 @@ def departmentDentist(patient: entitles.Patient) -> None:
     simulationTimeBox.grid(row=1, column=0, pady=10, padx=10)
 
     start_button = tk.Button(
-        window, text="Examine", command=lambda: patient_process(patient)
+        window,
+        text="Examine",
+        command=lambda: patient_process(patient),
+        bg="Dodgerblue",
+        fg="white",
+        font=("Verdana bold", 10),
     )
     start_button.grid(row=3, column=1, pady=10, padx=10)
 
@@ -186,6 +191,7 @@ def departmentDentist(patient: entitles.Patient) -> None:
         def payment_window() -> None:
             window_pay = tk.Toplevel(window)
             window_pay.title("Pay Bill")
+            window_pay.configure(bg="skyblue")
 
             text_main = tk.Label(window_pay, text="Dentist Bill Summary")
             text_main.grid(row=0, column=0, columnspan=3, padx=10, pady=10)
@@ -215,7 +221,14 @@ def departmentDentist(patient: entitles.Patient) -> None:
 
                 window_pay.destroy()
 
-            pay_button = tk.Button(window_pay, text="Pay Bill", command=pay)
+            pay_button = tk.Button(
+                window_pay,
+                text="Pay Bill",
+                command=pay,
+                bg="Dodgerblue",
+                fg="white",
+                font=("Verdana bold", 10),
+            )
             pay_button.grid(row=2, column=0, columnspan=3, padx=10, pady=10)
 
             window_pay.mainloop()
@@ -245,7 +258,12 @@ def departmentPhysician(patient: entitles.Patient) -> None:
     simulationTimeBox.grid(row=1, column=0, pady=10, padx=10)
 
     start_button = tk.Button(
-        window, text="Examine", command=lambda: patient_process(patient)
+        window,
+        text="Examine",
+        command=lambda: patient_process(patient),
+        bg="Dodgerblue",
+        fg="white",
+        font=("Verdana bold", 10),
     )
     start_button.grid(row=3, column=1, pady=10, padx=10)
 
@@ -429,6 +447,7 @@ def departmentPhysician(patient: entitles.Patient) -> None:
         def payment_window() -> None:
             window_pay = tk.Toplevel(window)
             window_pay.title("Pay Bill")
+            window_pay.configure(bg="skyblue")
 
             text_main = tk.Label(window_pay, text="Physician Bill Summary")
             text_main.grid(row=0, column=0, columnspan=3, padx=10, pady=10)
@@ -461,7 +480,14 @@ def departmentPhysician(patient: entitles.Patient) -> None:
 
                 window_pay.destroy()
 
-            pay_button = tk.Button(window_pay, text="Pay Bill", command=pay)
+            pay_button = tk.Button(
+                window_pay,
+                text="Pay Bill",
+                command=pay,
+                bg="Dodgerblue",
+                fg="white",
+                font=("Verdana bold", 10),
+            )
             pay_button.grid(row=2, column=0, columnspan=3, padx=10, pady=10)
 
             window_pay.mainloop()
@@ -492,7 +518,12 @@ def departmentOphthalmologist(patient: entitles.Patient) -> None:
     simulationTimeBox.grid(row=1, column=0, pady=10, padx=10)
 
     start_button = tk.Button(
-        window, text="Enter", command=lambda: patient_process(patient)
+        window,
+        text="Enter",
+        command=lambda: patient_process(patient),
+        bg="Dodgerblue",
+        fg="white",
+        font=("Verdana bold", 10),
     )
     start_button.grid(row=3, column=1, pady=10, padx=10)
 
@@ -663,6 +694,7 @@ def departmentOphthalmologist(patient: entitles.Patient) -> None:
         def payment_window() -> None:
             window_pay = tk.Toplevel(window)
             window_pay.title("Pay Bill")
+            window_pay.configure(bg="skyblue")
 
             text_main = tk.Label(window_pay, text="Ophthalmologist Bill Summary")
             text_main.grid(row=0, column=0, columnspan=3, padx=10, pady=10)
@@ -695,7 +727,14 @@ def departmentOphthalmologist(patient: entitles.Patient) -> None:
 
                 window_pay.destroy()
 
-            pay_button = tk.Button(window_pay, text="Pay Bill", command=pay)
+            pay_button = tk.Button(
+                window_pay,
+                text="Pay Bill",
+                command=pay,
+                bg="Dodgerblue",
+                fg="white",
+                font=("Verdana bold", 10),
+            )
             pay_button.grid(row=2, column=0, columnspan=3, padx=10, pady=10)
 
             window_pay.mainloop()
@@ -718,7 +757,6 @@ def departmentUltrasound(patient: entitles.Patient) -> None:
     header = tk.Label(
         window,
         text=f"Hello {patient.name}! Welcome to the Ultrasound Department.",
-        bg="skyblue",
     )
     header.grid(row=0, column=0, pady=10, padx=10, columnspan=6)
 
@@ -735,6 +773,7 @@ def departmentUltrasound(patient: entitles.Patient) -> None:
         command=lambda: patient_process(patient),
         bg="Dodgerblue",
         fg="white",
+        font=("Verdana bold", 10),
     )
     start_button.grid(row=5, column=1, pady=10, padx=10, columnspan=5)
 
@@ -749,8 +788,9 @@ def departmentUltrasound(patient: entitles.Patient) -> None:
         window,
         text="Heart",
         command=lambda: select_organs("heart"),
-        bg="Dodgerblue",
+        bg="dark orchid",
         fg="white",
+        font=("Verdana bold", 10),
     )
     organ_1.grid(row=2, column=1, pady=10, padx=10)
 
@@ -758,8 +798,9 @@ def departmentUltrasound(patient: entitles.Patient) -> None:
         window,
         text="Liver",
         command=lambda: select_organs("liver"),
-        bg="Dodgerblue",
+        bg="dark orchid",
         fg="white",
+        font=("Verdana bold", 10),
     )
     organ_2.grid(row=2, column=2, pady=10, padx=10)
 
@@ -767,8 +808,9 @@ def departmentUltrasound(patient: entitles.Patient) -> None:
         window,
         text="Kidney",
         command=lambda: select_organs("kidney"),
-        bg="Dodgerblue",
+        bg="dark orchid",
         fg="white",
+        font=("Verdana bold", 10),
     )
     organ_3.grid(row=2, column=3, pady=10, padx=10)
 
@@ -776,7 +818,8 @@ def departmentUltrasound(patient: entitles.Patient) -> None:
         window,
         text="Lungs",
         command=lambda: select_organs("lungs"),
-        bg="Dodgerblue",
+        font=("Verdana bold", 10),
+        bg="dark orchid",
         fg="white",
     )
     organ_4.grid(row=2, column=4, pady=10, padx=10)
@@ -785,8 +828,9 @@ def departmentUltrasound(patient: entitles.Patient) -> None:
         window,
         text="Stomach",
         command=lambda: select_organs("stomach"),
-        bg="Dodgerblue",
+        bg="dark orchid",
         fg="white",
+        font=("Verdana bold", 10),
     )
     organ_5.grid(row=2, column=5, pady=10, padx=10)
 
@@ -797,7 +841,8 @@ def departmentUltrasound(patient: entitles.Patient) -> None:
     simulationTimeBox.grid(row=3, column=0, pady=10, padx=10, columnspan=1)
 
     text_1 = tk.Label(
-        window, text="Press Examine to start your examination...", bg="skyblue"
+        window,
+        text="Press Examine to start your examination...",
     )
     text_1.grid(row=4, column=1, pady=10, padx=10, columnspan=5)
 
@@ -838,6 +883,23 @@ def departmentUltrasound(patient: entitles.Patient) -> None:
                     simulatorBox.insert(tk.END, f"Starting ultrasound on {organ}\n")
                     simulationTimeBox.insert(tk.END, f"{env.now}\n")
                     window.update()
+                    yield env.timeout(2)
+                    simulatorBox.insert(tk.END, "Checking vicinity organs..\n")
+                    simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                    window.update()
+                    yield env.timeout(2)
+                    simulatorBox.insert(tk.END, "Everything seems good. Finalizing..\n")
+                    simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                    window.update()
+                    yield env.timeout(1)
+                    simulatorBox.insert(tk.END, f"Ultrasound on {organ} complete..\n")
+                    simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                    window.update()
+                    yield env.timeout(1)
+                    simulatorBox.insert(tk.END, f"Issues found: None..\n")
+                    simulationTimeBox.insert(tk.END, f"{env.now}\n")
+                    window.update()
+
                 patient.bill["ultrasound"]["Examination charges"] += 800
                 patient.bill["ultrasound"]["Examined organs"] += 1
                 patient.bill_total += 800

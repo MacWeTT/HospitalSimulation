@@ -144,13 +144,13 @@ class HospitalSimulator:
 
 if __name__ == "__main__":
     # Initialize the objects
-    # patient = askPatient()
-    patient = entitles.Patient(
-        name="Vikas",
-        # problems={"dental": ["caries", "bleedinggums", "brokentooth"]},
-        # problems={"weakeyesight": ["myopia", "conjunctivitis", "cataract"]},
-        problems={"illness": ["Hepatitis", "asthma", "Hypertension"]},
-    )
+    patient = askPatient()
+    # patient = entitles.Patient(
+    # name="Vikas",
+    # problems={"dental": ["caries", "bleedinggums", "brokentooth"],
+    # "eyes": ["myopia", "conjunctivitis", "cataract"],
+    # "illness": ["hepatitis", "asthma", "hypertension"]},
+    # )
     simulator = HospitalSimulator(patient=patient)
 
     # Run the simulation window

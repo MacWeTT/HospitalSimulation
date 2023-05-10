@@ -33,9 +33,21 @@ def askPatient() -> Patient:
 
     eye_available_entry = tk.Label(
         root,
-        text="Available diagnosis: Nearsightedness, Farsightedness, Cloudy vision.",
+        text="Available diagnosis: myopia, conjunctivitis, cataract.",
     )
     eye_available_entry.grid(row=4, column=0, columnspan=2, padx=10, pady=10)
+
+    physical_problem_label = tk.Label(root, text="Enter your physical problems:")
+    physical_problem_label.grid(row=5, column=0, padx=10, pady=10)
+
+    physical_problem_entry = tk.Entry(root)
+    physical_problem_entry.grid(row=5, column=1, padx=10, pady=10)
+
+    physical_available_entry = tk.Label(
+        root,
+        text="Available diagnosis: hepatitis, hypertension, asthma.",
+    )
+    physical_available_entry.grid(row=6, column=0, columnspan=2, padx=10, pady=10)
 
     patient = None
 
@@ -49,10 +61,10 @@ def askPatient() -> Patient:
         root.destroy()
 
     submit_button = tk.Button(root, text="Submit", command=submit)
-    submit_button.grid(row=5, column=0, pady=10, padx=10, columnspan=2)
+    submit_button.grid(row=7, column=0, pady=10, padx=10, columnspan=2)
 
     note_label = tk.Label(root, text="Enter your issues seperated by commas.")
-    note_label.grid(row=6, column=0, columnspan=2)
+    note_label.grid(row=8, column=0, columnspan=2)
 
     root.mainloop()
 
