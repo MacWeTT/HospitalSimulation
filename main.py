@@ -147,9 +147,9 @@ if __name__ == "__main__":
     # patient = askPatient()
     patient = entitles.Patient(
         name="Vikas",
-        #problems={"dental": ["caries", "bleedinggums", "brokentooth"]},
+        # problems={"dental": ["caries", "bleedinggums", "brokentooth"]},
         # problems={"weakeyesight": ["myopia", "conjunctivitis", "cataract"]},
-        problems={"illness": ["Hepatitis", "asthma","Hypertension"]},
+        problems={"illness": ["Hepatitis", "asthma", "Hypertension"]},
     )
     simulator = HospitalSimulator(patient=patient)
 

@@ -13,7 +13,9 @@ def departmentDentist(patient: entitles.Patient) -> None:
     window.configure(bg="skyblue")
 
     header = tk.Label(
-        window, text=f"Hello {patient.name}! Welcome to the Dentist Department."
+        window,
+        text=f"Hello {patient.name}! Welcome to the Dentist Department.",
+        bg="skyblue",
     )
     header.grid(row=0, column=1, pady=10, padx=10)
 
@@ -27,7 +29,9 @@ def departmentDentist(patient: entitles.Patient) -> None:
     )
     start_button.grid(row=3, column=1, pady=10, padx=10)
 
-    text_1 = tk.Label(window, text="Press Examine to start the procedure...")
+    text_1 = tk.Label(
+        window, text="Press Examine to start the procedure...", bg="skyblue"
+    )
     text_1.grid(row=4, column=1, pady=10, padx=10)
 
     def patient_process(patient) -> None:
@@ -719,12 +723,18 @@ def departmentUltrasound(patient: entitles.Patient) -> None:
     header.grid(row=0, column=0, pady=10, padx=10, columnspan=6)
 
     text_2 = tk.Label(
-        window, text="Please select the organs you want to examine:", bg="skyblue"
+        window,
+        text="Please select the organs from the list below which you want to examine:",
+        bg="skyblue",
     )
-    text_2.grid(row=1, column=1, pady=10, padx=10, columnspan=5)
+    text_2.grid(row=1, column=0, pady=10, padx=10, columnspan=6)
 
     start_button = tk.Button(
-        window, text="Examine", command=lambda: patient_process(patient)
+        window,
+        text="Examine",
+        command=lambda: patient_process(patient),
+        bg="Dodgerblue",
+        fg="white",
     )
     start_button.grid(row=5, column=1, pady=10, padx=10, columnspan=5)
 
@@ -735,20 +745,48 @@ def departmentUltrasound(patient: entitles.Patient) -> None:
             organs.append(organ)
             simulatorBox.insert(tk.END, f"Selected: {organ}\n")
 
-    organ_1 = tk.Button(window, text="Heart", command=lambda: select_organs("heart"))
+    organ_1 = tk.Button(
+        window,
+        text="Heart",
+        command=lambda: select_organs("heart"),
+        bg="Dodgerblue",
+        fg="white",
+    )
     organ_1.grid(row=2, column=1, pady=10, padx=10)
 
-    organ_2 = tk.Button(window, text="Liver", command=lambda: select_organs("liver"))
+    organ_2 = tk.Button(
+        window,
+        text="Liver",
+        command=lambda: select_organs("liver"),
+        bg="Dodgerblue",
+        fg="white",
+    )
     organ_2.grid(row=2, column=2, pady=10, padx=10)
 
-    organ_3 = tk.Button(window, text="Kidney", command=lambda: select_organs("kidney"))
+    organ_3 = tk.Button(
+        window,
+        text="Kidney",
+        command=lambda: select_organs("kidney"),
+        bg="Dodgerblue",
+        fg="white",
+    )
     organ_3.grid(row=2, column=3, pady=10, padx=10)
 
-    organ_4 = tk.Button(window, text="Lungs", command=lambda: select_organs("lungs"))
+    organ_4 = tk.Button(
+        window,
+        text="Lungs",
+        command=lambda: select_organs("lungs"),
+        bg="Dodgerblue",
+        fg="white",
+    )
     organ_4.grid(row=2, column=4, pady=10, padx=10)
 
     organ_5 = tk.Button(
-        window, text="Stomach", command=lambda: select_organs("stomach")
+        window,
+        text="Stomach",
+        command=lambda: select_organs("stomach"),
+        bg="Dodgerblue",
+        fg="white",
     )
     organ_5.grid(row=2, column=5, pady=10, padx=10)
 
